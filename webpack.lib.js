@@ -13,11 +13,11 @@ console.log('webpack __dirname', __dirname);
 module.exports = env => {
 	return [
 		{
-			entry: { 'dabjs': "./src/index.ts" },
+			entry: { 'dabbjs': "./src/index.ts" },
 			mode: 'development',
 			devtool: 'source-map',
 			output: {
-				library: 'dabjs',
+				library: 'dabbjs',
 				libraryTarget: 'umd',
 				//globalObject: 'this',
 				path: path.resolve(__dirname, 'dist'),
@@ -41,10 +41,10 @@ module.exports = env => {
 			}
 		},
 		{
-			entry: { 'dabjs.min': "./src/index.ts" },
+			entry: { 'dabbjs.min': "./src/index.ts" },
 			mode: "production",
 			output: {
-				library: 'dabjs',
+				library: 'dabbjs',
 				libraryTarget: 'umd',
 				//globalObject: 'this',
 				path: path.resolve(__dirname, 'dist'),
