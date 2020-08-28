@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Color = exports.Rect = exports.Size = exports.Point = exports.utils = exports.dab = exports.ajaxp = void 0;
+exports.XML = exports.Templates = exports.Color = exports.Rect = exports.Size = exports.Point = exports.utils = exports.dab = exports.ajaxp = void 0;
 var tslib_1 = require("tslib");
 var ajaxp_1 = tslib_1.__importDefault(require("./lib/ajaxp"));
 exports.ajaxp = ajaxp_1.default;
@@ -16,3 +16,6 @@ var rect_1 = tslib_1.__importDefault(require("./lib/rect"));
 exports.Rect = rect_1.default;
 var colors_1 = tslib_1.__importDefault(require("./lib/colors"));
 exports.Color = colors_1.default;
+var templates_1 = require("./lib/templates");
+Object.defineProperty(exports, "Templates", { enumerable: true, get: function () { return templates_1.Templates; } });
+Object.defineProperty(exports, "XML", { enumerable: true, get: function () { return templates_1.XML; } });
