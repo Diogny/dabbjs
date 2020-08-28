@@ -1,3 +1,4 @@
+import { IPoint, ISize, IRect, IEqual } from "./lib/interfaces";
 import ajaxp from "./lib/ajaxp";
 import * as dab from "./lib/dab";
 import * as utils from "./lib/utils";
@@ -10,8 +11,12 @@ export {
 	ajaxp,
 	dab,
 	utils,
+	IEqual,
+	IPoint,
 	Point,
+	ISize,
 	Size,
+	IRect,
 	Rect,
 	Color
 }
