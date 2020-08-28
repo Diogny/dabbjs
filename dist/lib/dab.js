@@ -65,7 +65,6 @@ exports.splat = function (o) { return exports.isArr(o) ? o : (exports.dfnd(o) ? 
  * @param src source object
  */
 exports.extend = function (obj, src) {
-    //!obj && (obj = {});
     //const returnedTarget = Object.assign(target, source); doesn't throw error if source is undefined
     //		but target has to be an object
     exports.pojo(src) && Object.keys(src).forEach(function (key) { obj[key] = src[key]; });

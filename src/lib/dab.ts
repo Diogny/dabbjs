@@ -79,7 +79,6 @@ export const splat = <T>(o: any): T[] => isArr(o) ? o : (dfnd(o) ? [o] : []);
  * @param src source object
  */
 export const extend = (obj: { [id: string]: any }, src: { [id: string]: any }) => { //no support for IE 8 https://plainjs.com/javascript/utilities/merge-two-javascript-objects-19/
-	//!obj && (obj = {});
 	//const returnedTarget = Object.assign(target, source); doesn't throw error if source is undefined
 	//		but target has to be an object
 	pojo(src) && Object.keys(src).forEach((key) => { obj[key] = src[key]; });
