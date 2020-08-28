@@ -71,7 +71,6 @@ var Point = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    //get positive(): boolean { return this.x >= 0 && this.y >= 0 }
     /**
      * @description rotatea a point (x,y) through center (x,y) by an angle
      * @param {number} x x to rotate
@@ -84,7 +83,6 @@ var Point = /** @class */ (function () {
         var radians = (Math.PI / 180) * angle, cos = Math.cos(radians), sin = Math.sin(radians), nx = (cos * (x - cx)) + (sin * (y - cy)) + cx, ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
         return { x: nx | 0, y: ny | 0 }; //round(nx, 3), round(ny, 3)
     };
-    //static
     Point.validateRotation = function (val) {
         return (val = (val | 0) % 360, (val < 0) && (val += 360), val);
     };
@@ -106,11 +104,9 @@ var Point = /** @class */ (function () {
     };
     Point.scale = function (v, k) { return new Point(k * v.x, k * v.y); };
     Point.translateBy = function (v, dx, dy) { return new Point(v.x + dx, v.y + dy); };
-    //static translate(v: Point, k: number): IPoint { return new Point(v.x + k, v.y + k) }
     Point.times = function (v, scaleX, scaleY) { return new Point(v.x * scaleX, v.y * scaleY); };
     Point.minus = function (v1, v2) { return new Point(v1.x - v2.x, v1.y - v2.y); };
     Point.plus = function (v1, v2) { return new Point(v1.x + v2.x, v1.y + v2.y); };
-    //
     Point.inside = function (p, s) { return p.x >= 0 && p.x <= s.width && p.y >= 0 && p.y <= s.height; };
     return Point;
 }());

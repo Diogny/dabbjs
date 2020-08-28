@@ -21,23 +21,32 @@ export { c as consts };
 
 export const ts = (t: any) => ({}).toString.call(t);
 
-//it can be extended later to array [] and object {}
+/**
+ * it can be extended later to array [] and object {}
+ * @param s any
+ */
 export const empty = (s: any): boolean => typeof s == void 0 || !s || (isStr(s) && s.match(/^ *$/) !== null);
 
-//returned values: array, date,	function, number, object, regexp, string, undefined  	global,	JSON, null
+/**
+ * returned values: array, date,	function, number, object, regexp, string, undefined  	global,	JSON, null
+ * @param o any
+ */
 export const typeOf = (o: any) => ts(o).slice(8, -1).toLowerCase();
-//nullOrWhiteSpace(s) {
-//	return !s || s.match(/^ *$/) !== null;
-//},
 
 export const isFn = (f: any) => typeof f === c.fn;
 
-//defined			undefined === void 0
+/**
+ * defined,	undefined === void 0
+ * @param t any
+ */
 export const dfnd = (t: any) => t !== void 0 && t !== null;
 
 export const isStr = (s: any) => typeof s === c.s;
 
-//true for Array, pojo retruns true only for a plain old object {}
+/**
+ * true for Array, pojo retruns true only for a plain old object {}
+ * @param t any
+ */
 export const isObj = (t: any) => typeof t === c.o;
 
 export const isArr = (t: any) => Array.isArray(t); // typeOf(t) === c.a;
@@ -64,7 +73,11 @@ export const round = (v: number, decimals: number) => {
 
 export const splat = <T>(o: any): T[] => isArr(o) ? o : (dfnd(o) ? [o] : []);
 
-//copy all properties in src to obj, and returns obj
+/**
+ * copy all properties in src to obj, and returns obj
+ * @param obj dest object
+ * @param src source object
+ */
 export const extend = (obj: { [id: string]: any }, src: { [id: string]: any }) => { //no support for IE 8 https://plainjs.com/javascript/utilities/merge-two-javascript-objects-19/
 	//!obj && (obj = {});
 	//const returnedTarget = Object.assign(target, source); doesn't throw error if source is undefined
@@ -73,7 +86,11 @@ export const extend = (obj: { [id: string]: any }, src: { [id: string]: any }) =
 	return obj;
 }
 
-//copy properties in src that exists only in obj, and returns obj
+/**
+ * copy properties in src that exists only in obj, and returns obj
+ * @param obj dest and template object
+ * @param src source object
+ */
 export const copy = (obj: { [id: string]: any }, src: { [id: string]: any }) => {
 	pojo(src) && Object.keys(obj).forEach((key) => {
 		let
@@ -94,7 +111,11 @@ export const inherit = (parent: any, child: any) => {
  */
 export const isDOM = (e: any) => e instanceof window.HTMLElement || e instanceof window.HTMLDocument;
 
-export const pojo = (arg: any): boolean => {	// plainObj   Plain Old JavaScript Object (POJO)		{}
+/**
+ * plainObj   Plain Old JavaScript Object (POJO) {}
+ * @param arg args
+ */
+export const pojo = (arg: any): boolean => {
 	if (arg == null || typeof arg !== 'object') {
 		return false;
 	}
@@ -108,7 +129,11 @@ export const pojo = (arg: any): boolean => {	// plainObj   Plain Old JavaScript 
 	//Object.getPrototypeOf(Object.create(null)) == null
 }
 
-export const obj = (o: any) => {			//deep copy
+/**
+ * deep copy
+ * @param o any
+ */
+export const obj = (o: any) => {
 	if (!pojo(o)) {
 		return o;
 	}
@@ -123,6 +148,10 @@ export const obj = (o: any) => {			//deep copy
 	return result;
 }
 
+/**
+ * JSON stringify & parse cloner
+ * @param o any
+ */
 export const clone = <T>(o: T): T => <T>JSON.parse(JSON.stringify(o));
 
 export const defEnum = (e: any) => {
@@ -132,7 +161,12 @@ export const defEnum = (e: any) => {
 	return e;
 }
 
-export const css = (el: any, styles: any) => {//css(el, { background: 'green', display: 'none', 'border-radius': '5px' });
+/**
+ * css(el, { background: 'green', display: 'none', 'border-radius': '5px' });
+ * @param el HTMLElement
+ * @param styles object of styles
+ */
+export const css = (el: any, styles: any) => {
 	if (isStr(styles))
 		return el.style[styles];
 	for (let prop in styles)
@@ -217,16 +251,29 @@ export const tCl = (el: Element, className: string, force?: boolean): boolean =>
 
 export const range = (s: number, e: number) => Array.from('x'.repeat(e - s), (_, i) => s + i);
 
-//Sets
+/**
+ * return unique items in array
+ * @param x array
+ */
 export const unique = (x: any[]): any[] => x.filter((elem, index) => x.indexOf(elem) === index);
 
 export const union = (x: any[], y: any[]): any[] => unique(x.concat(y));
 
+/**
+ * add class safe
+ * @param el HTMLElement
+ * @param className class names separated by space
+ */
 export const aClx = (el: Element, className: string): Element => {
 	el.classList.add(...(className || "").split(' ').filter((v: string) => !empty(v)))
 	return el
 }
 
+/**
+ * LINQ select many
+ * @param input 
+ * @param selectListFn 
+ */
 export const selectMany = <TIn, TOut>(input: TIn[], selectListFn: (t: TIn) => TOut[]): TOut[] =>
 	input.reduce((out, inx) => {
 		out.push(...selectListFn(inx));
@@ -236,16 +283,35 @@ export const selectMany = <TIn, TOut>(input: TIn[], selectListFn: (t: TIn) => TO
 var a = {
 	'True': true,
 	'true': true,
-	'false': false,
 	'False': false,
+	'false': false,
 	'undefined': false,
 	'null': false,
 	'1': true,
 	'0': false
 };
 
+/**
+ * return true if value it's true or false
+ * @param val any
+ * 
+ * value can be:
+ * - True
+ * - true
+ * - False,
+ * - false
+ * - undefined
+ * - null
+ * - 1
+ * - 0
+ */
 export const toBool = (val: any): boolean => a[val] || false;
 
+/**
+ * parses an string and returns an array of parsed number values
+ * @param s string in the form "n0, n1, n2, n3, n(n)"
+ * @param l amount of valid numbers to parse
+ */
 export const parse = (s: string, l: number): number[] | undefined => {
 	let
 		n: number,

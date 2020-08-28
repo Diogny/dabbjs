@@ -12,7 +12,12 @@ export const DOMTemplates = (): { [key: string]: any } => {
 	return templates;
 }
 
-//used for string & numbers
+/**
+ * used for string & numbers
+ * @param t string
+ * @param e amount
+ * @param ch pad char
+ */
 export const pad = (t: string, e: number, ch?: any) =>
 	new Array(Math.max(0, (e || 2) + 1 - String(t).length)).join(ch ? ch : '0') + t;
 
@@ -37,7 +42,12 @@ export const html = (html: string): ChildNode => {
 	return <any>template.content.firstChild;
 };
 
-export const each = (obj: any, fn: (value: any, key: string, ndx: number) => void) => {		//for objects
+/**
+ * for objects
+ * @param obj 
+ * @param fn 
+ */
+export const each = (obj: any, fn: (value: any, key: string, ndx: number) => void) => {
 	if (!isFn(fn) || !obj)
 		return;
 	let ndx = 0;
@@ -46,7 +56,12 @@ export const each = (obj: any, fn: (value: any, key: string, ndx: number) => voi
 			fn(obj[key], key, ndx++);	// (value, key, index)
 };
 
-export const map = (obj: any, fn: (value: any, key: string, ndx: number) => any) => {		//for objects
+/**
+ * for objects
+ * @param obj 
+ * @param fn 
+ */
+export const map = (obj: any, fn: (value: any, key: string, ndx: number) => any) => {
 	let arr: any[] = [];
 	each(obj, (value: any, key: string, ndx: number) => {
 		arr.push(fn(value, key, ndx));
@@ -54,7 +69,12 @@ export const map = (obj: any, fn: (value: any, key: string, ndx: number) => any)
 	return arr;
 };
 
-export const filter = (obj: any, fn: (value: any, key: string, ndx: number) => any) => {		//for objects, returns an object with key=>value
+/**
+ * for objects, returns an object with key=>value
+ * @param obj 
+ * @param fn 
+ */
+export const filter = (obj: any, fn: (value: any, key: string, ndx: number) => any) => {		
 	let o: any = {};
 	each(obj, (value: any, key: string, ndx: number) => {
 		fn(value, key, ndx) && (o[key] = value);

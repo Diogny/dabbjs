@@ -12,8 +12,8 @@ export default class Rect implements IRect {
 		// Point.inside(Point.minus(p, this.location), this.size)
 	}
 
-	//later reverse this, so this is modified, not r
 	public intersect(r: Rect): boolean {
+		//later reverse this, so this is modified, not r
 		let
 			nx = Math.max(this.x, r.x),
 			ny = Math.max(this.y, r.y);

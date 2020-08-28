@@ -1,6 +1,12 @@
 export declare const DOMTemplates: () => {
     [key: string]: any;
 };
+/**
+ * used for string & numbers
+ * @param t string
+ * @param e amount
+ * @param ch pad char
+ */
 export declare const pad: (t: string, e: number, ch?: any) => string;
 export declare const fillChar: (ch: string, len: number) => string;
 export declare const padStr: (s: string, width: number) => string;
@@ -8,8 +14,23 @@ export declare const formatNumber: (n: number, width: number) => string;
 export declare const tag: (tagName: string, id: string, nsAttrs: any) => SVGElement;
 export declare const svg: (html: string) => Element;
 export declare const html: (html: string) => ChildNode;
+/**
+ * for objects
+ * @param obj
+ * @param fn
+ */
 export declare const each: (obj: any, fn: (value: any, key: string, ndx: number) => void) => void;
+/**
+ * for objects
+ * @param obj
+ * @param fn
+ */
 export declare const map: (obj: any, fn: (value: any, key: string, ndx: number) => any) => any[];
+/**
+ * for objects, returns an object with key=>value
+ * @param obj
+ * @param fn
+ */
 export declare const filter: (obj: any, fn: (value: any, key: string, ndx: number) => any) => any;
 /**
  * @description

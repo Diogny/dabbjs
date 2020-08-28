@@ -77,7 +77,6 @@ export default class Point implements IPoint {
 		else
 			return (this.x < 0) ? 3 : 4
 	}
-	//get positive(): boolean { return this.x >= 0 && this.y >= 0 }
 
 	/**
 	 * @description rotatea a point (x,y) through center (x,y) by an angle
@@ -96,7 +95,6 @@ export default class Point implements IPoint {
 		return { x: nx | 0, y: ny | 0 }	//round(nx, 3), round(ny, 3)
 	}
 
-	//static
 	static validateRotation(val: number): number {
 		return (val = (val | 0) % 360, (val < 0) && (val += 360), val);
 	}
@@ -121,13 +119,11 @@ export default class Point implements IPoint {
 
 	static translateBy(v: IPoint, dx: number, dy: number): Point { return new Point(v.x + dx, v.y + dy) }
 
-	//static translate(v: Point, k: number): IPoint { return new Point(v.x + k, v.y + k) }
 	static times(v: IPoint, scaleX: number, scaleY: number): Point { return new Point(v.x * scaleX, v.y * scaleY) }
 
 	static minus(v1: IPoint, v2: IPoint): Point { return new Point(v1.x - v2.x, v1.y - v2.y) }
 
 	static plus(v1: IPoint, v2: IPoint): Point { return new Point(v1.x + v2.x, v1.y + v2.y) }
 
-	//
 	static inside(p: IPoint, s: ISize): boolean { return p.x >= 0 && p.x <= s.width && p.y >= 0 && p.y <= s.height }
 }

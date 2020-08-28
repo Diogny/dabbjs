@@ -10,7 +10,12 @@ exports.DOMTemplates = function () {
     }));
     return templates;
 };
-//used for string & numbers
+/**
+ * used for string & numbers
+ * @param t string
+ * @param e amount
+ * @param ch pad char
+ */
 exports.pad = function (t, e, ch) {
     return new Array(Math.max(0, (e || 2) + 1 - String(t).length)).join(ch ? ch : '0') + t;
 };
@@ -29,6 +34,11 @@ exports.html = function (html) {
     template.innerHTML = html;
     return template.content.firstChild;
 };
+/**
+ * for objects
+ * @param obj
+ * @param fn
+ */
 exports.each = function (obj, fn) {
     if (!dab_1.isFn(fn) || !obj)
         return;
@@ -37,6 +47,11 @@ exports.each = function (obj, fn) {
         if (!obj.hasOwnProperty || obj.hasOwnProperty(key))
             fn(obj[key], key, ndx++); // (value, key, index)
 };
+/**
+ * for objects
+ * @param obj
+ * @param fn
+ */
 exports.map = function (obj, fn) {
     var arr = [];
     exports.each(obj, function (value, key, ndx) {
@@ -44,6 +59,11 @@ exports.map = function (obj, fn) {
     });
     return arr;
 };
+/**
+ * for objects, returns an object with key=>value
+ * @param obj
+ * @param fn
+ */
 exports.filter = function (obj, fn) {
     var o = {};
     exports.each(obj, function (value, key, ndx) {

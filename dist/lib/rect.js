@@ -17,8 +17,8 @@ var Rect = /** @class */ (function () {
         return p.x >= this.x && p.y >= this.y && p.x <= (this.x + this.width) && p.y <= (this.y + this.height);
         // Point.inside(Point.minus(p, this.location), this.size)
     };
-    //later reverse this, so this is modified, not r
     Rect.prototype.intersect = function (r) {
+        //later reverse this, so this is modified, not r
         var nx = Math.max(this.x, r.x), ny = Math.max(this.y, r.y);
         r.width = Math.min((this.x + this.width), (r.x + r.width)) - nx;
         r.height = Math.min((this.y + this.height), (r.y + r.height)) - ny;
