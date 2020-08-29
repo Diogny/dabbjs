@@ -51,15 +51,32 @@ var Rect = /** @class */ (function () {
      * @param dy top & bottom growth
      */
     Rect.prototype.grow = function (dx, dy) {
-        this.x -= (dx = dx | 0);
-        this.y -= (dy = dy | 0);
+        this.x -= dx;
+        this.y -= dy;
         this.width += dx * 2;
         this.height += dy * 2;
         return this;
     };
+    /**
+     * @description translates the rectangle
+     * @param tx x translation
+     * @param ty y translation
+     */
     Rect.prototype.translate = function (tx, ty) {
-        this.x -= (tx = tx | 0);
-        this.y -= (ty = ty | 0);
+        this.x -= tx;
+        this.y -= ty;
+        return this;
+    };
+    /**
+     * @description scales this rectangle by a factor
+     * @param sx x, width scale factor
+     * @param sy y, height scale factor
+     */
+    Rect.prototype.scale = function (sx, sy) {
+        this.x *= sx;
+        this.y *= sy;
+        this.width *= sx;
+        this.height *= sy;
         return this;
     };
     Rect.prototype.equal = function (r) { return this.x == r.x && this.y == r.y && this.width == r.width && this.height == r.height; };

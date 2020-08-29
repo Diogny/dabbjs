@@ -18,7 +18,18 @@ export default class Rect implements IRect {
      * @param dy top & bottom growth
      */
     grow(dx: number, dy: number): Rect;
+    /**
+     * @description translates the rectangle
+     * @param tx x translation
+     * @param ty y translation
+     */
     translate(tx: number, ty: number): Rect;
+    /**
+     * @description scales this rectangle by a factor
+     * @param sx x, width scale factor
+     * @param sy y, height scale factor
+     */
+    scale(sx: number, sy: number): Rect;
     equal(r: Rect): boolean;
     static create(rect: IRect, toInt?: boolean): Rect;
     static get empty(): Rect;

@@ -55,16 +55,34 @@ export default class Rect implements IRect {
 	 * @param dy top & bottom growth
 	 */
 	public grow(dx: number, dy: number): Rect {
-		this.x -= (dx = dx | 0);
-		this.y -= (dy = dy | 0);
+		this.x -= dx;
+		this.y -= dy;
 		this.width += dx * 2;
 		this.height += dy * 2;
 		return this
 	}
 
+	/**
+	 * @description translates the rectangle
+	 * @param tx x translation
+	 * @param ty y translation
+	 */
 	public translate(tx: number, ty: number): Rect {
-		this.x -= (tx = tx | 0);
-		this.y -= (ty = ty | 0);
+		this.x -= tx;
+		this.y -= ty;
+		return this
+	}
+
+	/**
+	 * @description scales this rectangle by a factor
+	 * @param sx x, width scale factor
+	 * @param sy y, height scale factor
+	 */
+	public scale(sx: number, sy: number): Rect {
+		this.x *= sx;
+		this.y *= sy;
+		this.width *= sx;
+		this.height *= sy;
 		return this
 	}
 
