@@ -143,9 +143,12 @@ exports.defEnum = function (e) {
 exports.css = function (el, styles) {
     if (exports.isStr(styles))
         return el.style[styles];
-    for (var prop in styles)
-        el.style[prop] = styles[prop];
-    return el;
+    else {
+        Object.assign(el.style, styles);
+        // for (let prop in styles)
+        // 	el.style[prop] = styles[prop];
+        return el;
+    }
 };
 exports.attr = function (el, attrs) {
     if (exports.isStr(attrs))

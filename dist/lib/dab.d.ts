@@ -82,7 +82,9 @@ export declare const defEnum: (e: any) => any;
  * @param el HTMLElement
  * @param styles object of styles
  */
-export declare const css: (el: any, styles: any) => any;
+export declare const css: (el: HTMLElement, styles: string | {
+    [id: string]: any;
+}) => any;
 export declare const attr: (el: any, attrs: any) => any;
 /**
  * @description adds an event listener to an element

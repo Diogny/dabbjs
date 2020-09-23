@@ -165,12 +165,15 @@ export const defEnum = (e: any) => {
  * @param el HTMLElement
  * @param styles object of styles
  */
-export const css = (el: any, styles: any) => {
+export const css = (el: HTMLElement, styles: { [id: string]: any } | string) => {
 	if (isStr(styles))
-		return el.style[styles];
-	for (let prop in styles)
-		el.style[prop] = styles[prop];
-	return el;
+		return el.style[<string>styles]
+	else {
+		Object.assign(el.style, styles)
+		// for (let prop in styles)
+		// 	el.style[prop] = styles[prop];
+		return el
+	}
 }
 
 export const attr = function (el: any, attrs: any) {
