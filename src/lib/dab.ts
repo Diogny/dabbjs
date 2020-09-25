@@ -283,13 +283,13 @@ export const selectMany = <TIn, TOut>(input: TIn[], selectListFn: (t: TIn) => TO
 	}, new Array<TOut>());
 
 var a = {
+	'TRUE': true,
 	'True': true,
 	'true': true,
+	'1': true,
+	'FALSE': false,
 	'False': false,
 	'false': false,
-	'undefined': false,
-	'null': false,
-	'1': true,
 	'0': false
 };
 
@@ -298,16 +298,16 @@ var a = {
  * @param val any
  * 
  * value can be:
+ * - TRUE
  * - True
  * - true
- * - False,
+ * - FALSE
+ * - False
  * - false
- * - undefined
- * - null
  * - 1
  * - 0
  */
-export const toBool = (val: any): boolean => a[val] || false;
+export const toBool = (val: any): boolean | undefined => a[val];
 
 /**
  * parses an string and returns an array of parsed number values

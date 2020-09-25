@@ -166,16 +166,16 @@ export declare const selectMany: <TIn, TOut>(input: TIn[], selectListFn: (t: TIn
  * @param val any
  *
  * value can be:
+ * - TRUE
  * - True
  * - true
- * - False,
+ * - FALSE
+ * - False
  * - false
- * - undefined
- * - null
  * - 1
  * - 0
  */
-export declare const toBool: (val: any) => boolean;
+export declare const toBool: (val: any) => boolean | undefined;
 /**
  * parses an string and returns an array of parsed number values
  * @param s string in the form "n0, n1, n2, n3, n(n)"

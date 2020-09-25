@@ -244,13 +244,13 @@ exports.selectMany = function (input, selectListFn) {
     }, new Array());
 };
 var a = {
+    'TRUE': true,
     'True': true,
     'true': true,
+    '1': true,
+    'FALSE': false,
     'False': false,
     'false': false,
-    'undefined': false,
-    'null': false,
-    '1': true,
     '0': false
 };
 /**
@@ -258,16 +258,16 @@ var a = {
  * @param val any
  *
  * value can be:
+ * - TRUE
  * - True
  * - true
- * - False,
+ * - FALSE
+ * - False
  * - false
- * - undefined
- * - null
  * - 1
  * - 0
  */
-exports.toBool = function (val) { return a[val] || false; };
+exports.toBool = function (val) { return a[val]; };
 /**
  * parses an string and returns an array of parsed number values
  * @param s string in the form "n0, n1, n2, n3, n(n)"
