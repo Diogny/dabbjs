@@ -1,3 +1,6 @@
+import { IPoint } from 'src';
+import Point from './point';
+import Vector2D from './vec2';
 export declare const DOMTemplates: () => {
     [key: string]: any;
 };
@@ -30,6 +33,18 @@ export declare const svg: (html: string) => SVGElement;
  * @param html html string representation
  */
 export declare const html: (html: string) => HTMLElement;
+/**
+ * @description returns the points of an arrow and vector
+ * @param a first point
+ * @param b second point
+ * @param head arrow head length
+ * @param swipe swipe angle of head line
+ */
+export declare const arrow: (a: IPoint, b: Point, head: number, swipe: number) => {
+    v: Vector2D;
+    a: Point;
+    b: Point;
+};
 /**
  * for objects
  * @param obj

@@ -1,4 +1,7 @@
+import { IPoint } from 'src';
 import { isFn, attr, aEL, consts as _, pojo } from './dab';
+import Point from './point';
+import Vector2D from './vec2';
 
 export const DOMTemplates = (): { [key: string]: any } => {
 	let
@@ -55,6 +58,25 @@ export const html = (html: string): HTMLElement => {
 	template.innerHTML = html;
 	return <HTMLElement>template.content.firstChild;
 };
+
+/**
+ * @description returns the points of an arrow and vector
+ * @param a first point
+ * @param b second point
+ * @param head arrow head length
+ * @param swipe swipe angle of head line
+ */
+export const arrow = (a: IPoint, b: Point, head: number, swipe: number) => {
+	let
+		v = new Vector2D(b.x - a.x, b.y - a.y),
+		angle = Math.atan2(v.y, v.x),
+		p = (ang: number) => new Point(b.x - head * Math.cos(ang), b.y - head * Math.sin(ang));
+	return {
+		v: v,
+		a: p(angle - swipe),
+		b: p(angle + swipe)
+	}
+}
 
 /**
  * for objects

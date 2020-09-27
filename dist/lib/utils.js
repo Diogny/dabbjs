@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.camel = exports.cssUncamel = exports.cssCamel = exports.matrix = exports.basePath = exports.gEId = exports.qSA = exports.qS = exports.ready = exports.prop = exports.filterArray = exports.filter = exports.map = exports.each = exports.html = exports.svg = exports.tag = exports.formatNumber = exports.padStr = exports.fillChar = exports.pad = exports.DOMTemplates = void 0;
+exports.camel = exports.cssUncamel = exports.cssCamel = exports.matrix = exports.basePath = exports.gEId = exports.qSA = exports.qS = exports.ready = exports.prop = exports.filterArray = exports.filter = exports.map = exports.each = exports.arrow = exports.html = exports.svg = exports.tag = exports.formatNumber = exports.padStr = exports.fillChar = exports.pad = exports.DOMTemplates = void 0;
+var tslib_1 = require("tslib");
 var dab_1 = require("./dab");
+var point_1 = tslib_1.__importDefault(require("./point"));
+var vec2_1 = tslib_1.__importDefault(require("./vec2"));
 exports.DOMTemplates = function () {
     var templates = {};
     Array.from(exports.qSA('script[data-tmpl]')).forEach((function (scr) {
@@ -47,6 +50,21 @@ exports.html = function (html) {
     var template = document.createElement("template");
     template.innerHTML = html;
     return template.content.firstChild;
+};
+/**
+ * @description returns the points of an arrow and vector
+ * @param a first point
+ * @param b second point
+ * @param head arrow head length
+ * @param swipe swipe angle of head line
+ */
+exports.arrow = function (a, b, head, swipe) {
+    var v = new vec2_1.default(b.x - a.x, b.y - a.y), angle = Math.atan2(v.y, v.x), p = function (ang) { return new point_1.default(b.x - head * Math.cos(ang), b.y - head * Math.sin(ang)); };
+    return {
+        v: v,
+        a: p(angle - swipe),
+        b: p(angle + swipe)
+    };
 };
 /**
  * for objects
