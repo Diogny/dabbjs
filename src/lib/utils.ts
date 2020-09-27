@@ -27,19 +27,33 @@ export const padStr = (s: string, width: number) => new Array(Math.max(0, width 
 
 export const formatNumber = (n: number, width: number) => padStr(n + "", width);
 
-export const tag = (tagName: string, id: string, nsAttrs: any): SVGElement => (id && (nsAttrs.id = id),
+/**
+ * @description creates an SVG element by tag name
+ * @param tagName tag name
+ * @param id optional name
+ * @param nsAttrs attributes
+ */
+export const tag = (tagName: string, id: string, nsAttrs: { [id: string]: any }): SVGElement => <SVGElement><unknown>(id && (nsAttrs.id = id),
 	attr(document.createElementNS(_.svgNs, tagName), nsAttrs));
 
-export const svg = (html: string): Element => {
+/**
+ * @description creates an SVG element by an string
+ * @param html html string representation
+ */
+export const svg = (html: string): SVGElement => {
 	let template = document.createElementNS(_.svgNs, "template");
 	template.innerHTML = html;
-	return template.children[0];
+	return <SVGElement>template.children[0];
 };
 
-export const html = (html: string): ChildNode => {
+/**
+ * @description creates an HTML element by an string
+ * @param html html string representation
+ */
+export const html = (html: string): HTMLElement => {
 	let template = document.createElement("template");
 	template.innerHTML = html;
-	return <any>template.content.firstChild;
+	return <HTMLElement>template.content.firstChild;
 };
 
 /**
@@ -74,7 +88,7 @@ export const map = (obj: any, fn: (value: any, key: string, ndx: number) => any)
  * @param obj 
  * @param fn 
  */
-export const filter = (obj: any, fn: (value: any, key: string, ndx: number) => any) => {		
+export const filter = (obj: any, fn: (value: any, key: string, ndx: number) => any) => {
 	let o: any = {};
 	each(obj, (value: any, key: string, ndx: number) => {
 		fn(value, key, ndx) && (o[key] = value);
@@ -146,6 +160,9 @@ export const qSA = (s: string) => document.querySelectorAll(s);
  */
 export const gEId = (id: string) => document.getElementById(id);
 
+/**
+ * @description extracts a base-name from page metadata
+ */
 export const basePath = () => {
 	let
 		meta = qS('meta[name="base"]');
@@ -166,11 +183,21 @@ export const matrix = <T>(rows: number, cols: number, filler: T): T[][] =>
  * @param str font-size  -webkit-box-shadow
  * @@returns fontSize  WebkitBoxShadow
  */
-export const camel = (str: string) => str.replace(/\-([a-z])/gi, (match, group) => group.toUpperCase())
+export const cssCamel = (str: string) => str.replace(/\-([a-z])/gi, (match, group) => group.toUpperCase())
 
 /**
  * @description removes camel of a web css property
  * @param str fontSize  WebkitBoxShadow
  * @returns font-size  -webkit-box-shadow
  */
-export const uncamel = (str: string) => str.replace(/([A-Z])/g, (match, group) => '-' + group.toLowerCase())
+export const cssUncamel = (str: string) => str.replace(/([A-Z])/g, (match, group) => '-' + group.toLowerCase())
+
+/**
+ * @description converts an string to camel case
+ * @param str string
+ * 
+ * - width => Width
+ * - width height => Width Height
+ */
+export const camel = (str: string) => str.replace(/([a-z])(\w*)/gi, (match, letter, rest) => letter.toUpperCase() + rest);
+

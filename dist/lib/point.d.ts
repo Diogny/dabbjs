@@ -5,12 +5,17 @@ import { IPoint, ISize } from './interfaces';
 export default class Point implements IPoint {
     x: number;
     y: number;
+    /**
+     * @description creates a Point 2D
+     * @param x number, is rounded
+     * @param y number, is rounded
+     */
     constructor(x: number, y: number);
     /**
      * @description calculates distance from this point to another
      * @param p point
      */
-    distance(p: Point): number;
+    distance(p: IPoint): number;
     /**
      * @description clones point
      */
@@ -31,7 +36,7 @@ export default class Point implements IPoint {
      * @description equality comparer
      * @param p point
      */
-    equal(p: Point): boolean;
+    equal(p: IPoint): boolean;
     /**
      * @description returns string of a Point oobject
      * @param options 0 = x,y	1 = parenthesis; 	2 = variables x: x, y: y

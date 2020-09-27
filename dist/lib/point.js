@@ -7,6 +7,11 @@ var dab_1 = require("./dab");
  * @description a 2 dimension integer point class
  */
 var Point = /** @class */ (function () {
+    /**
+     * @description creates a Point 2D
+     * @param x number, is rounded
+     * @param y number, is rounded
+     */
     function Point(x, y) {
         this.x = Math.round(x);
         this.y = Math.round(y);
@@ -29,7 +34,9 @@ var Point = /** @class */ (function () {
      * @param x vector x
      * @param y vector y
      */
-    Point.prototype.add = function (x, y) { return new Point(this.x + x, this.y + y); };
+    Point.prototype.add = function (x, y) {
+        return new Point(this.x + x, this.y + y);
+    };
     /**
      * @description scales this point by a multiple (x,y)
      * @param x mul x

@@ -11,9 +11,25 @@ export declare const pad: (t: string, e: number, ch?: any) => string;
 export declare const fillChar: (ch: string, len: number) => string;
 export declare const padStr: (s: string, width: number) => string;
 export declare const formatNumber: (n: number, width: number) => string;
-export declare const tag: (tagName: string, id: string, nsAttrs: any) => SVGElement;
-export declare const svg: (html: string) => Element;
-export declare const html: (html: string) => ChildNode;
+/**
+ * @description creates an SVG element by tag name
+ * @param tagName tag name
+ * @param id optional name
+ * @param nsAttrs attributes
+ */
+export declare const tag: (tagName: string, id: string, nsAttrs: {
+    [id: string]: any;
+}) => SVGElement;
+/**
+ * @description creates an SVG element by an string
+ * @param html html string representation
+ */
+export declare const svg: (html: string) => SVGElement;
+/**
+ * @description creates an HTML element by an string
+ * @param html html string representation
+ */
+export declare const html: (html: string) => HTMLElement;
 /**
  * for objects
  * @param obj
@@ -55,6 +71,9 @@ export declare const qSA: (s: string) => NodeListOf<Element>;
  * @param s #id
  */
 export declare const gEId: (id: string) => HTMLElement | null;
+/**
+ * @description extracts a base-name from page metadata
+ */
 export declare const basePath: () => string | null;
 /**
  * @description creates a NxN matrix
@@ -68,10 +87,18 @@ export declare const matrix: <T>(rows: number, cols: number, filler: T) => T[][]
  * @param str font-size  -webkit-box-shadow
  * @@returns fontSize  WebkitBoxShadow
  */
-export declare const camel: (str: string) => string;
+export declare const cssCamel: (str: string) => string;
 /**
  * @description removes camel of a web css property
  * @param str fontSize  WebkitBoxShadow
  * @returns font-size  -webkit-box-shadow
  */
-export declare const uncamel: (str: string) => string;
+export declare const cssUncamel: (str: string) => string;
+/**
+ * @description converts an string to camel case
+ * @param str string
+ *
+ * - width => Width
+ * - width height => Width Height
+ */
+export declare const camel: (str: string) => string;

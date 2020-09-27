@@ -1,7 +1,7 @@
 "use strict";
 //still in progress...
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parse = exports.toBool = exports.selectMany = exports.aClx = exports.union = exports.unique = exports.range = exports.tCl = exports.rCl = exports.aCl = exports.hCl = exports.aChld = exports.dP = exports.rEL = exports.aEL = exports.attr = exports.css = exports.defEnum = exports.clone = exports.obj = exports.pojo = exports.isDOM = exports.inherit = exports.copy = exports.extend = exports.splat = exports.round = exports.clamp = exports.pInt = exports.isInt = exports.isNumeric = exports.isNum = exports.isArr = exports.isObj = exports.isStr = exports.dfnd = exports.isFn = exports.typeOf = exports.empty = exports.ts = exports.consts = void 0;
+exports.parse = exports.fBool = exports.isBool = exports.toBool = exports.selectMany = exports.aClx = exports.union = exports.unique = exports.range = exports.tCl = exports.rCl = exports.aCl = exports.hCl = exports.aChld = exports.dP = exports.drEL = exports.daEl = exports.rEL = exports.aEL = exports.attr = exports.css = exports.defEnum = exports.clone = exports.obj = exports.pojo = exports.isDOM = exports.inherit = exports.copy = exports.extend = exports.splat = exports.round = exports.clamp = exports.pInt = exports.isInt = exports.isNumeric = exports.isNum = exports.isArr = exports.isObj = exports.isStr = exports.dfnd = exports.isFn = exports.typeOf = exports.empty = exports.ts = exports.consts = void 0;
 var tslib_1 = require("tslib");
 var c = {
     s: "string",
@@ -44,16 +44,51 @@ exports.isStr = function (s) { return typeof s === c.s; };
  */
 exports.isObj = function (t) { return typeof t === c.o; };
 exports.isArr = function (t) { return Array.isArray(t); }; // typeOf(t) === c.a;
-//has to be a number ("1") == false
+/**
+ * @description returns true if n is number
+ * @param n value
+ *
+ * - "1" returns false
+ * - NaN returns true
+ */
 exports.isNum = function (n) { return typeof n === c.n; };
-// ("1") == true
+/**
+ * @description returns true if n is numeric
+ * @param n
+ *
+ * - "1" returns true
+ * - NaN returns false
+ */
 exports.isNumeric = function (n) { return isNaN(n) ? !1 : (n = parseInt(n), (0 | n) === n); };
 //return (typeof x === dab.n) && (x % 1 === 0);
 exports.isInt = function (n) { return (parseFloat(n) == parseInt(n)) && !isNaN(n); };
 //http://speakingjs.com/es5/ch11.html#converting_to_integer
-exports.pInt = function (s, mag) { return parseInt(s, mag || 10); };
-// clamp(value, min, max) - limits value to the range min..max
+/**
+ * @description parse a number according to a radix
+ * @param s string value
+ * @param radix convertion radix
+ *
+ * - "0101001" => 2		binary
+ * - "0xFF"	=> 255 hexadecimal
+ * - "123" => 123
+ */
+exports.pInt = function (s, radix) { return parseInt(s, radix); };
+/**
+ * @description clamps a value inside a range min..max
+ * @param v value
+ * @param min minim
+ * @param max maximum
+ */
 exports.clamp = function (v, min, max) { return (v <= min) ? min : (v >= max) ? max : v; };
+/**
+ * @description rounds a number to a decimal
+ * @param v float value
+ * @param decimals valid decimals
+ *
+ * - (123.5678, 1) => 123.6
+ * - (123.5678, 0) => 124
+ * - (123.5678, -1) => NaN
+ */
 exports.round = function (v, decimals) {
     //https://expertcodeblog.wordpress.com/2018/02/12/typescript-javascript-round-number-by-decimal-pecision/
     return (decimals = decimals | 0, Number(Math.round(Number(v + "e" + decimals)) + "e-" + decimals));
@@ -150,6 +185,11 @@ exports.css = function (el, styles) {
         return el;
     }
 };
+/**
+ * @description get/set html element attribute
+ * @param el HTML element
+ * @param attrs string to get it's attribute, or an object with attributes to set
+ */
 exports.attr = function (el, attrs) {
     if (exports.isStr(attrs))
         return el.getAttribute(attrs);
@@ -160,19 +200,34 @@ exports.attr = function (el, attrs) {
 /**
  * @description adds an event listener to an element
  * @param el element
- * @param eventName event name
- * @param fn
- * @param b
+ * @param type event name
+ * @param fn listener function
+ * @param b boolean | AddEventListenerOptions | undefined
  */
-exports.aEL = function (el, eventName, fn, b) { return el.addEventListener(eventName, fn, b); };
+exports.aEL = function (el, type, fn, b) { return el.addEventListener(type, fn, b); };
 /**
- * @description removes an event listener to an element
+ * @description removes an event listener from an element
  * @param el element
- * @param eventName event name
+ * @param type event name
  * @param fn
  * @param b
  */
-exports.rEL = function (el, eventName, fn, b) { return el.removeEventListener(eventName, fn, b); };
+exports.rEL = function (el, type, fn, b) { return el.removeEventListener(type, fn, b); };
+/**
+ * @description adds an event listener to the document
+ * @param type event name
+ * @param fn listener function
+ * @param b boolean | AddEventListenerOptions | undefined
+ */
+exports.daEl = function (type, fn, b) { return document.addEventListener(type, fn, b); };
+/**
+ * @description removes an event listener from the document
+ * @param el element
+ * @param type event name
+ * @param fn
+ * @param b
+ */
+exports.drEL = function (type, fn, b) { return document.removeEventListener(type, fn, b); };
 /**
  * @description defines a new object property
  * @param obj object
@@ -254,7 +309,7 @@ var a = {
     '0': false
 };
 /**
- * return true if value it's true or false
+ * return true if value it's true or false, undefined if not valid
  * @param val any
  *
  * value can be:
@@ -269,9 +324,31 @@ var a = {
  */
 exports.toBool = function (val) { return a[val]; };
 /**
+ * return true if value is a valid boolean
+ * @param val any
+ *
+ * valid values are:
+ * - TRUE
+ * - True
+ * - true
+ * - FALSE
+ * - False
+ * - false
+ * - 1
+ * - 0
+ */
+exports.isBool = function (val) { return a[val] != undefined; };
+/**
+ * @description converts a value to boolean, and undefined are forced to boolean
+ * @param val value
+ * @param forcedUndefined forced undefined values, default is "false"
+ */
+exports.fBool = function (val, forcedUndefined) { return a[val] || !!forcedUndefined; };
+/**
  * parses an string and returns an array of parsed number values
  * @param s string in the form "n0, n1, n2, n3, n(n)"
  * @param l amount of valid numbers to parse
+ * @returns number array if valid, undefined otherwise
  */
 exports.parse = function (s, l) {
     var n, nans = false, numbers = s.split(',').map(function (str) { return (n = parseFloat(str), isNaN(n) && (nans = true), n); });

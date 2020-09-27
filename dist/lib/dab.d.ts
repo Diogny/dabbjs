@@ -24,11 +24,49 @@ export declare const isStr: (s: any) => boolean;
  */
 export declare const isObj: (t: any) => boolean;
 export declare const isArr: (t: any) => boolean;
+/**
+ * @description returns true if n is number
+ * @param n value
+ *
+ * - "1" returns false
+ * - NaN returns true
+ */
 export declare const isNum: (n: any) => boolean;
+/**
+ * @description returns true if n is numeric
+ * @param n
+ *
+ * - "1" returns true
+ * - NaN returns false
+ */
 export declare const isNumeric: (n: any) => boolean;
 export declare const isInt: (n: any) => boolean;
-export declare const pInt: (s: string, mag?: number | undefined) => number;
+/**
+ * @description parse a number according to a radix
+ * @param s string value
+ * @param radix convertion radix
+ *
+ * - "0101001" => 2		binary
+ * - "0xFF"	=> 255 hexadecimal
+ * - "123" => 123
+ */
+export declare const pInt: (s: string, radix?: number | undefined) => number;
+/**
+ * @description clamps a value inside a range min..max
+ * @param v value
+ * @param min minim
+ * @param max maximum
+ */
 export declare const clamp: (v: number, min: number, max: number) => number;
+/**
+ * @description rounds a number to a decimal
+ * @param v float value
+ * @param decimals valid decimals
+ *
+ * - (123.5678, 1) => 123.6
+ * - (123.5678, 0) => 124
+ * - (123.5678, -1) => NaN
+ */
 export declare const round: (v: number, decimals: number) => number;
 export declare const splat: <T>(o: any) => T[];
 /**
@@ -85,23 +123,45 @@ export declare const defEnum: (e: any) => any;
 export declare const css: (el: HTMLElement, styles: string | {
     [id: string]: any;
 }) => any;
-export declare const attr: (el: any, attrs: any) => any;
+/**
+ * @description get/set html element attribute
+ * @param el HTML element
+ * @param attrs string to get it's attribute, or an object with attributes to set
+ */
+export declare const attr: (el: HTMLElement, attrs: string | {
+    [id: string]: any;
+}) => string | HTMLElement | null;
 /**
  * @description adds an event listener to an element
  * @param el element
- * @param eventName event name
- * @param fn
- * @param b
+ * @param type event name
+ * @param fn listener function
+ * @param b boolean | AddEventListenerOptions | undefined
  */
-export declare const aEL: (el: HTMLElement, eventName: string, fn: Function, b?: boolean | AddEventListenerOptions | undefined) => void;
+export declare const aEL: (el: HTMLElement, type: string, fn: Function, b?: boolean | AddEventListenerOptions | undefined) => void;
 /**
- * @description removes an event listener to an element
+ * @description removes an event listener from an element
  * @param el element
- * @param eventName event name
+ * @param type event name
  * @param fn
  * @param b
  */
-export declare const rEL: (el: HTMLElement, eventName: string, fn: Function, b?: boolean | AddEventListenerOptions | undefined) => void;
+export declare const rEL: (el: HTMLElement, type: string, fn: Function, b?: boolean | AddEventListenerOptions | undefined) => void;
+/**
+ * @description adds an event listener to the document
+ * @param type event name
+ * @param fn listener function
+ * @param b boolean | AddEventListenerOptions | undefined
+ */
+export declare const daEl: (type: string, fn: Function, b?: boolean | AddEventListenerOptions | undefined) => void;
+/**
+ * @description removes an event listener from the document
+ * @param el element
+ * @param type event name
+ * @param fn
+ * @param b
+ */
+export declare const drEL: (type: string, fn: Function, b?: boolean | AddEventListenerOptions | undefined) => void;
 /**
  * @description defines a new object property
  * @param obj object
@@ -162,7 +222,7 @@ export declare const aClx: (el: Element, className: string) => Element;
  */
 export declare const selectMany: <TIn, TOut>(input: TIn[], selectListFn: (t: TIn) => TOut[]) => TOut[];
 /**
- * return true if value it's true or false
+ * return true if value it's true or false, undefined if not valid
  * @param val any
  *
  * value can be:
@@ -177,8 +237,30 @@ export declare const selectMany: <TIn, TOut>(input: TIn[], selectListFn: (t: TIn
  */
 export declare const toBool: (val: any) => boolean | undefined;
 /**
+ * return true if value is a valid boolean
+ * @param val any
+ *
+ * valid values are:
+ * - TRUE
+ * - True
+ * - true
+ * - FALSE
+ * - False
+ * - false
+ * - 1
+ * - 0
+ */
+export declare const isBool: (val: any) => boolean;
+/**
+ * @description converts a value to boolean, and undefined are forced to boolean
+ * @param val value
+ * @param forcedUndefined forced undefined values, default is "false"
+ */
+export declare const fBool: (val: any, forcedUndefined?: boolean | undefined) => boolean;
+/**
  * parses an string and returns an array of parsed number values
  * @param s string in the form "n0, n1, n2, n3, n(n)"
  * @param l amount of valid numbers to parse
+ * @returns number array if valid, undefined otherwise
  */
 export declare const parse: (s: string, l: number) => number[] | undefined;

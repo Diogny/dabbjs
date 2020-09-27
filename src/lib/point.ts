@@ -11,6 +11,11 @@ export default class Point implements IPoint {
 	x: number;
 	y: number;
 
+	/**
+	 * @description creates a Point 2D
+	 * @param x number, is rounded
+	 * @param y number, is rounded
+	 */
 	constructor(x: number, y: number) {
 		this.x = Math.round(x);
 		this.y = Math.round(y)
@@ -20,7 +25,7 @@ export default class Point implements IPoint {
 	 * @description calculates distance from this point to another
 	 * @param p point
 	 */
-	public distance(p: Point): number {
+	public distance(p: IPoint): number {
 		var dx = this.x - p.x;
 		var dy = this.y - p.y;
 		return Math.sqrt(dx * dx + dy * dy);
@@ -36,7 +41,10 @@ export default class Point implements IPoint {
 	 * @param x vector x
 	 * @param y vector y
 	 */
-	public add(x: number, y: number): Point { return new Point(this.x + x, this.y + y) }
+	public add(x: number, y: number): Point {
+
+		return new Point(this.x + x, this.y + y)
+	}
 
 	/**
 	 * @description scales this point by a multiple (x,y)
@@ -49,7 +57,7 @@ export default class Point implements IPoint {
 	 * @description equality comparer
 	 * @param p point
 	 */
-	public equal(p: Point): boolean { return this.x == p.x && this.y == p.y }
+	public equal(p: IPoint): boolean { return this.x == p.x && this.y == p.y }
 
 	/**
 	 * @description returns string of a Point oobject

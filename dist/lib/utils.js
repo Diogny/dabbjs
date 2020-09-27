@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uncamel = exports.camel = exports.matrix = exports.basePath = exports.gEId = exports.qSA = exports.qS = exports.ready = exports.prop = exports.filterArray = exports.filter = exports.map = exports.each = exports.html = exports.svg = exports.tag = exports.formatNumber = exports.padStr = exports.fillChar = exports.pad = exports.DOMTemplates = void 0;
+exports.camel = exports.cssUncamel = exports.cssCamel = exports.matrix = exports.basePath = exports.gEId = exports.qSA = exports.qS = exports.ready = exports.prop = exports.filterArray = exports.filter = exports.map = exports.each = exports.html = exports.svg = exports.tag = exports.formatNumber = exports.padStr = exports.fillChar = exports.pad = exports.DOMTemplates = void 0;
 var dab_1 = require("./dab");
 exports.DOMTemplates = function () {
     var templates = {};
@@ -22,13 +22,27 @@ exports.pad = function (t, e, ch) {
 exports.fillChar = function (ch, len) { return new Array(len).join(ch); };
 exports.padStr = function (s, width) { return new Array(Math.max(0, width - s.length)).join(' ') + s; };
 exports.formatNumber = function (n, width) { return exports.padStr(n + "", width); };
+/**
+ * @description creates an SVG element by tag name
+ * @param tagName tag name
+ * @param id optional name
+ * @param nsAttrs attributes
+ */
 exports.tag = function (tagName, id, nsAttrs) { return (id && (nsAttrs.id = id),
     dab_1.attr(document.createElementNS(dab_1.consts.svgNs, tagName), nsAttrs)); };
+/**
+ * @description creates an SVG element by an string
+ * @param html html string representation
+ */
 exports.svg = function (html) {
     var template = document.createElementNS(dab_1.consts.svgNs, "template");
     template.innerHTML = html;
     return template.children[0];
 };
+/**
+ * @description creates an HTML element by an string
+ * @param html html string representation
+ */
 exports.html = function (html) {
     var template = document.createElement("template");
     template.innerHTML = html;
@@ -125,6 +139,9 @@ exports.qSA = function (s) { return document.querySelectorAll(s); };
  * @param s #id
  */
 exports.gEId = function (id) { return document.getElementById(id); };
+/**
+ * @description extracts a base-name from page metadata
+ */
 exports.basePath = function () {
     var meta = exports.qS('meta[name="base"]');
     return meta ? meta.getAttribute('content') : "";
@@ -143,10 +160,18 @@ exports.matrix = function (rows, cols, filler) {
  * @param str font-size  -webkit-box-shadow
  * @@returns fontSize  WebkitBoxShadow
  */
-exports.camel = function (str) { return str.replace(/\-([a-z])/gi, function (match, group) { return group.toUpperCase(); }); };
+exports.cssCamel = function (str) { return str.replace(/\-([a-z])/gi, function (match, group) { return group.toUpperCase(); }); };
 /**
  * @description removes camel of a web css property
  * @param str fontSize  WebkitBoxShadow
  * @returns font-size  -webkit-box-shadow
  */
-exports.uncamel = function (str) { return str.replace(/([A-Z])/g, function (match, group) { return '-' + group.toLowerCase(); }); };
+exports.cssUncamel = function (str) { return str.replace(/([A-Z])/g, function (match, group) { return '-' + group.toLowerCase(); }); };
+/**
+ * @description converts an string to camel case
+ * @param str string
+ *
+ * - width => Width
+ * - width height => Width Height
+ */
+exports.camel = function (str) { return str.replace(/([a-z])(\w*)/gi, function (match, letter, rest) { return letter.toUpperCase() + rest; }); };
