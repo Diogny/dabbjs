@@ -61,6 +61,7 @@ exports.html = function (html) {
 exports.arrow = function (a, b, head, swipe) {
     var v = new vec2_1.default(b.x - a.x, b.y - a.y), angle = Math.atan2(v.y, v.x), p = function (ang) { return new point_1.default(b.x - head * Math.cos(ang), b.y - head * Math.sin(ang)); };
     return {
+        ang: angle,
         v: v,
         a: p(angle - swipe),
         b: p(angle + swipe)

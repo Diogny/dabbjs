@@ -66,12 +66,13 @@ export const html = (html: string): HTMLElement => {
  * @param head arrow head length
  * @param swipe swipe angle of head line
  */
-export const arrow = (a: IPoint, b: Point, head: number, swipe: number) => {
+export const arrow = (a: IPoint, b: IPoint, head: number, swipe: number) => {
 	let
 		v = new Vector2D(b.x - a.x, b.y - a.y),
 		angle = Math.atan2(v.y, v.x),
 		p = (ang: number) => new Point(b.x - head * Math.cos(ang), b.y - head * Math.sin(ang));
 	return {
+		ang: angle,
 		v: v,
 		a: p(angle - swipe),
 		b: p(angle + swipe)

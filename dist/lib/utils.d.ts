@@ -40,7 +40,8 @@ export declare const html: (html: string) => HTMLElement;
  * @param head arrow head length
  * @param swipe swipe angle of head line
  */
-export declare const arrow: (a: IPoint, b: Point, head: number, swipe: number) => {
+export declare const arrow: (a: IPoint, b: IPoint, head: number, swipe: number) => {
+    ang: number;
     v: Vector2D;
     a: Point;
     b: Point;
