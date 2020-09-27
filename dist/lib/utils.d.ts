@@ -1,4 +1,4 @@
-import { IPoint } from 'src';
+import { IPoint } from './interfaces';
 import Point from './point';
 import Vector2D from './vec2';
 export declare const DOMTemplates: () => {

@@ -1,4 +1,4 @@
-import { IPoint } from 'src';
+import { IPoint } from './interfaces';
 import { isFn, attr, aEL, consts as _, pojo } from './dab';
 import Point from './point';
 import Vector2D from './vec2';
