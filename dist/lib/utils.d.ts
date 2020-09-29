@@ -1,6 +1,13 @@
 import { IPoint } from './interfaces';
 import Point from './point';
 import Vector2D from './vec2';
+/**
+ * @description retrieves all DOM script templates
+ *
+ * script with attribute data-tmpl="id" are returned as an object with [id] as key.
+ *
+ * it removes any CDATA, LF, NL, Tabs from result
+ */
 export declare const DOMTemplates: () => {
     [key: string]: any;
 };
@@ -11,8 +18,23 @@ export declare const DOMTemplates: () => {
  * @param ch pad char
  */
 export declare const pad: (t: string, e: number, ch?: any) => string;
+/**
+ *
+ * @param ch char|string to fill
+ * @param len repeat count, must be equal or greater than zero
+ */
 export declare const fillChar: (ch: string, len: number) => string;
+/**
+ * @description left pads an string
+ * @param s string to padd
+ * @param width max amount of final string, if less, same string is returned
+ */
 export declare const padStr: (s: string, width: number) => string;
+/**
+ * @description pad left number
+ * @param n number to convert to string
+ * @param width max width, if less, number to string is returned
+ */
 export declare const formatNumber: (n: number, width: number) => string;
 /**
  * @description creates an SVG element by tag name
@@ -47,41 +69,65 @@ export declare const arrow: (a: IPoint, b: IPoint, head: number, swipe: number) 
     b: Point;
 };
 /**
- * for objects
- * @param obj
- * @param fn
+ * @description loops through an object properties and returns it in a function
+ * @param obj an object
+ * @param fn a function as (value: any, key: string, ndx: number) => void
  */
-export declare const each: (obj: any, fn: (value: any, key: string, ndx: number) => void) => void;
+export declare const each: (obj: {
+    [id: string]: any;
+}, fn: (value: any, key: string, ndx: number) => void) => void;
 /**
- * for objects
- * @param obj
- * @param fn
+ * @description returns an array of all object properties mapped
+ * @param obj an object
+ * @param fn a function as (value: any, key: string, ndx: number) => any
  */
-export declare const map: (obj: any, fn: (value: any, key: string, ndx: number) => any) => any[];
+export declare const map: (obj: {
+    [id: string]: any;
+}, fn: (value: any, key: string, ndx: number) => any) => any[];
 /**
- * for objects, returns an object with key=>value
- * @param obj
- * @param fn
+ * @description filters an object properties by a function
+ * @param obj an object
+ * @param fn a function as (value: any, key: string, ndx: number) => any
  */
-export declare const filter: (obj: any, fn: (value: any, key: string, ndx: number) => any) => any;
+export declare const filter: (obj: {
+    [id: string]: any;
+}, fn: (value: any, key: string, ndx: number) => any) => {
+    [id: string]: any;
+};
 /**
  * @description
  * @param obj an object to filter
  * @param fn if it returns true array[]= value (key is lost), if object array[] = object, otherwise discarded
  */
-export declare const filterArray: (obj: any, fn: (value: any, key: string, ndx: number) => any) => any[];
-export declare const prop: (o: any, path: string, value?: any) => any;
+export declare const filterArray: (obj: {
+    [id: string]: any;
+}, fn: (value: any, key: string, ndx: number) => any) => any[];
+/**
+ * @description get/set object property
+ * @param o object
+ * @param path path to property "a.b.c"
+ * @param value undefined to get value, otherwise
+ */
+export declare const prop: (o: {
+    [id: string]: any;
+}, path: string, value?: any) => any;
+/**
+ * @description calls a function when DOM is ready
+ * @param fn function to be called
+ */
 export declare const ready: (fn: Function) => boolean;
 /**
  * @description document.querySelector shortcut
- * @param s query
+ * @param selectors query string
+ * @param elem HTMLElement or document if undefined
  */
-export declare const qS: (s: string) => HTMLElement;
+export declare const qS: (selectors: string, elem?: HTMLElement | undefined) => HTMLElement;
 /**
  * @description document.querySelectorAll shortcut
- * @param s query
+ * @param selectors query string
+ * @param elem HTMLElement or document if undefined
  */
-export declare const qSA: (s: string) => NodeListOf<Element>;
+export declare const qSA: (selectors: string, elem?: HTMLElement | undefined) => NodeListOf<Element>;
 /**
  * @description document.getElementById shortcut
  * @param s #id

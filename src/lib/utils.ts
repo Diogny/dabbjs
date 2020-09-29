@@ -3,6 +3,13 @@ import { isFn, attr, aEL, consts as _, pojo } from './dab';
 import Point from './point';
 import Vector2D from './vec2';
 
+/**
+ * @description retrieves all DOM script templates
+ * 
+ * script with attribute data-tmpl="id" are returned as an object with [id] as key.
+ * 
+ * it removes any CDATA, LF, NL, Tabs from result
+ */
 export const DOMTemplates = (): { [key: string]: any } => {
 	let
 		templates: { [key: string]: any } = {};
@@ -24,10 +31,25 @@ export const DOMTemplates = (): { [key: string]: any } => {
 export const pad = (t: string, e: number, ch?: any) =>
 	new Array(Math.max(0, (e || 2) + 1 - String(t).length)).join(ch ? ch : '0') + t;
 
-export const fillChar = (ch: string, len: number) => new Array(len).join(ch);
+/**
+ * 
+ * @param ch char|string to fill
+ * @param len repeat count, must be equal or greater than zero
+ */
+export const fillChar = (ch: string, len: number) => new Array(len + 1).join(ch);
 
-export const padStr = (s: string, width: number) => new Array(Math.max(0, width - s.length)).join(' ') + s;
+/**
+ * @description left pads an string
+ * @param s string to padd
+ * @param width max amount of final string, if less, same string is returned
+ */
+export const padStr = (s: string, width: number) => new Array(Math.max(0, width - s.length + 1)).join(' ') + s;
 
+/**
+ * @description pad left number
+ * @param n number to convert to string
+ * @param width max width, if less, number to string is returned
+ */
 export const formatNumber = (n: number, width: number) => padStr(n + "", width);
 
 /**
@@ -80,11 +102,11 @@ export const arrow = (a: IPoint, b: IPoint, head: number, swipe: number) => {
 }
 
 /**
- * for objects
- * @param obj 
- * @param fn 
+ * @description loops through an object properties and returns it in a function
+ * @param obj an object
+ * @param fn a function as (value: any, key: string, ndx: number) => void
  */
-export const each = (obj: any, fn: (value: any, key: string, ndx: number) => void) => {
+export const each = (obj: { [id: string]: any }, fn: (value: any, key: string, ndx: number) => void) => {
 	if (!isFn(fn) || !obj)
 		return;
 	let ndx = 0;
@@ -94,11 +116,11 @@ export const each = (obj: any, fn: (value: any, key: string, ndx: number) => voi
 };
 
 /**
- * for objects
- * @param obj 
- * @param fn 
+ * @description returns an array of all object properties mapped
+ * @param obj an object
+ * @param fn a function as (value: any, key: string, ndx: number) => any
  */
-export const map = (obj: any, fn: (value: any, key: string, ndx: number) => any) => {
+export const map = (obj: { [id: string]: any }, fn: (value: any, key: string, ndx: number) => any) => {
 	let arr: any[] = [];
 	each(obj, (value: any, key: string, ndx: number) => {
 		arr.push(fn(value, key, ndx));
@@ -107,12 +129,12 @@ export const map = (obj: any, fn: (value: any, key: string, ndx: number) => any)
 };
 
 /**
- * for objects, returns an object with key=>value
- * @param obj 
- * @param fn 
+ * @description filters an object properties by a function
+ * @param obj an object
+ * @param fn a function as (value: any, key: string, ndx: number) => any
  */
-export const filter = (obj: any, fn: (value: any, key: string, ndx: number) => any) => {
-	let o: any = {};
+export const filter = (obj: { [id: string]: any }, fn: (value: any, key: string, ndx: number) => any) => {
+	let o: { [id: string]: any } = {};
 	each(obj, (value: any, key: string, ndx: number) => {
 		fn(value, key, ndx) && (o[key] = value);
 	});
@@ -124,7 +146,7 @@ export const filter = (obj: any, fn: (value: any, key: string, ndx: number) => a
  * @param obj an object to filter
  * @param fn if it returns true array[]= value (key is lost), if object array[] = object, otherwise discarded
  */
-export const filterArray = (obj: any, fn: (value: any, key: string, ndx: number) => any) => {
+export const filterArray = (obj: { [id: string]: any }, fn: (value: any, key: string, ndx: number) => any) => {
 	let o: any[] = [];
 	each(obj, (value: any, key: string, ndx: number) => {
 		let
@@ -137,7 +159,13 @@ export const filterArray = (obj: any, fn: (value: any, key: string, ndx: number)
 	return o;
 };
 
-export const prop = function (o: any, path: string, value?: any) {
+/**
+ * @description get/set object property
+ * @param o object
+ * @param path path to property "a.b.c"
+ * @param value undefined to get value, otherwise
+ */
+export const prop = function (o: { [id: string]: any }, path: string, value?: any) {
 	let
 		r = path.split('.').map(s => s.trim()),
 		last = <string>r.pop(),
@@ -146,9 +174,13 @@ export const prop = function (o: any, path: string, value?: any) {
 		o = o[r[i]]
 	}
 	result = o && o[last];
-	return value ? ((result != undefined) && (o[<string>last] = value, true)) : result
+	return value != undefined ? ((result != undefined) && (o[<string>last] = value, true)) : result
 };
 
+/**
+ * @description calls a function when DOM is ready
+ * @param fn function to be called
+ */
 export const ready = (fn: Function) => { //https://plainjs.com/javascript/events/running-code-when-the-document-is-ready-15/
 	if (!isFn(fn)) {
 		return !1;
@@ -167,15 +199,17 @@ export const ready = (fn: Function) => { //https://plainjs.com/javascript/events
 
 /**
  * @description document.querySelector shortcut
- * @param s query
+ * @param selectors query string
+ * @param elem HTMLElement or document if undefined
  */
-export const qS = (s: string): HTMLElement => <HTMLElement>document.querySelector(s);
+export const qS = (selectors: string, elem?: HTMLElement): HTMLElement => <HTMLElement>(elem || document).querySelector(selectors);
 
 /**
  * @description document.querySelectorAll shortcut
- * @param s query
+ * @param selectors query string
+ * @param elem HTMLElement or document if undefined
  */
-export const qSA = (s: string) => document.querySelectorAll(s);
+export const qSA = (selectors: string, elem?: HTMLElement) => (elem || document).querySelectorAll(selectors);
 
 /**
  * @description document.getElementById shortcut

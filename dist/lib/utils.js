@@ -5,6 +5,13 @@ var tslib_1 = require("tslib");
 var dab_1 = require("./dab");
 var point_1 = tslib_1.__importDefault(require("./point"));
 var vec2_1 = tslib_1.__importDefault(require("./vec2"));
+/**
+ * @description retrieves all DOM script templates
+ *
+ * script with attribute data-tmpl="id" are returned as an object with [id] as key.
+ *
+ * it removes any CDATA, LF, NL, Tabs from result
+ */
 exports.DOMTemplates = function () {
     var templates = {};
     Array.from(exports.qSA('script[data-tmpl]')).forEach((function (scr) {
@@ -22,8 +29,23 @@ exports.DOMTemplates = function () {
 exports.pad = function (t, e, ch) {
     return new Array(Math.max(0, (e || 2) + 1 - String(t).length)).join(ch ? ch : '0') + t;
 };
-exports.fillChar = function (ch, len) { return new Array(len).join(ch); };
-exports.padStr = function (s, width) { return new Array(Math.max(0, width - s.length)).join(' ') + s; };
+/**
+ *
+ * @param ch char|string to fill
+ * @param len repeat count, must be equal or greater than zero
+ */
+exports.fillChar = function (ch, len) { return new Array(len + 1).join(ch); };
+/**
+ * @description left pads an string
+ * @param s string to padd
+ * @param width max amount of final string, if less, same string is returned
+ */
+exports.padStr = function (s, width) { return new Array(Math.max(0, width - s.length + 1)).join(' ') + s; };
+/**
+ * @description pad left number
+ * @param n number to convert to string
+ * @param width max width, if less, number to string is returned
+ */
 exports.formatNumber = function (n, width) { return exports.padStr(n + "", width); };
 /**
  * @description creates an SVG element by tag name
@@ -68,9 +90,9 @@ exports.arrow = function (a, b, head, swipe) {
     };
 };
 /**
- * for objects
- * @param obj
- * @param fn
+ * @description loops through an object properties and returns it in a function
+ * @param obj an object
+ * @param fn a function as (value: any, key: string, ndx: number) => void
  */
 exports.each = function (obj, fn) {
     if (!dab_1.isFn(fn) || !obj)
@@ -81,9 +103,9 @@ exports.each = function (obj, fn) {
             fn(obj[key], key, ndx++); // (value, key, index)
 };
 /**
- * for objects
- * @param obj
- * @param fn
+ * @description returns an array of all object properties mapped
+ * @param obj an object
+ * @param fn a function as (value: any, key: string, ndx: number) => any
  */
 exports.map = function (obj, fn) {
     var arr = [];
@@ -93,9 +115,9 @@ exports.map = function (obj, fn) {
     return arr;
 };
 /**
- * for objects, returns an object with key=>value
- * @param obj
- * @param fn
+ * @description filters an object properties by a function
+ * @param obj an object
+ * @param fn a function as (value: any, key: string, ndx: number) => any
  */
 exports.filter = function (obj, fn) {
     var o = {};
@@ -120,14 +142,24 @@ exports.filterArray = function (obj, fn) {
     });
     return o;
 };
+/**
+ * @description get/set object property
+ * @param o object
+ * @param path path to property "a.b.c"
+ * @param value undefined to get value, otherwise
+ */
 exports.prop = function (o, path, value) {
     var r = path.split('.').map(function (s) { return s.trim(); }), last = r.pop(), result = void 0;
     for (var i = 0; !!o && i < r.length; i++) {
         o = o[r[i]];
     }
     result = o && o[last];
-    return value ? ((result != undefined) && (o[last] = value, true)) : result;
+    return value != undefined ? ((result != undefined) && (o[last] = value, true)) : result;
 };
+/**
+ * @description calls a function when DOM is ready
+ * @param fn function to be called
+ */
 exports.ready = function (fn) {
     if (!dab_1.isFn(fn)) {
         return !1;
@@ -145,14 +177,16 @@ exports.ready = function (fn) {
 };
 /**
  * @description document.querySelector shortcut
- * @param s query
+ * @param selectors query string
+ * @param elem HTMLElement or document if undefined
  */
-exports.qS = function (s) { return document.querySelector(s); };
+exports.qS = function (selectors, elem) { return (elem || document).querySelector(selectors); };
 /**
  * @description document.querySelectorAll shortcut
- * @param s query
+ * @param selectors query string
+ * @param elem HTMLElement or document if undefined
  */
-exports.qSA = function (s) { return document.querySelectorAll(s); };
+exports.qSA = function (selectors, elem) { return (elem || document).querySelectorAll(selectors); };
 /**
  * @description document.getElementById shortcut
  * @param s #id
