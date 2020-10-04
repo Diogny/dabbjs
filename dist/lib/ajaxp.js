@@ -23,6 +23,7 @@ var ajaxp = /** @class */ (function () {
             ox = ajaxp.update(ajaxp.xobj, ox);
             x.open(ox.method, url, true);
             x[ajaxp.rt] = ox.responseType;
+            x.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); //PHP detect AJAX
             x.onreadystatechange = function () {
                 var DONE = 4, // readyState 4 means the request is done.
                 OK = 200, // status 200 is a successful return.
