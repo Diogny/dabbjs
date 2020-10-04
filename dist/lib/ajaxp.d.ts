@@ -3,7 +3,7 @@ export default abstract class ajaxp {
     static sPost: string;
     static xobj: object;
     static rt: string;
-    static x(): any;
+    static x(): XMLHttpRequest;
     static query(data: {
         [key: string]: any;
     }, ask: boolean): string;
@@ -15,10 +15,28 @@ export default abstract class ajaxp {
     static send(url: string, ox: {
         [key: string]: any;
     }): Promise<any>;
-    static get(url: string, ox: {
+    /**
+     * @description performs a AJAX GET
+     * @param url url
+     * @param ox options below:
+     *
+     * - method: GET
+     * - responseType: json|text. default is "text"
+     * - data: object with values, it's sent appended to url ? &
+     */
+    static get(url: string, ox?: {
         [key: string]: any;
     }): Promise<any>;
-    static post(url: string, ox: {
+    /**
+     * @description performs a AJAX POST
+     * @param url url
+     * @param ox options below:
+     *
+     * - method: POST
+     * - responseType: json|text. default is "text"
+     * - data: object with values, it's sent in the body
+     */
+    static post(url: string, ox?: {
         [key: string]: any;
     }): Promise<any>;
 }

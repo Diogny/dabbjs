@@ -9,7 +9,7 @@ export default abstract class ajaxp {
 	}
 	static rt: string = "responseType";
 
-	public static x() { return window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); }
+	public static x(): XMLHttpRequest { return window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); }
 
 	static query(data: { [key: string]: any }, ask: boolean) {
 		let query = [];
@@ -63,11 +63,29 @@ export default abstract class ajaxp {
 		});
 	}
 
-	public static get(url: string, ox: { [key: string]: any }): Promise<any> {
+	/**
+	 * @description performs a AJAX GET
+	 * @param url url
+	 * @param ox options below:
+	 * 
+	 * - method: GET
+	 * - responseType: json|text. default is "text"
+	 * - data: object with values, it's sent appended to url ? &
+	 */
+	public static get(url: string, ox?: { [key: string]: any }): Promise<any> {
 		return (ox = ox || {}, ox.method = ajaxp.sGet, url += ajaxp.query(ox.data, true), ox.data = void 0, ajaxp.send(url, ox))
 	}
 
-	public static post(url: string, ox: { [key: string]: any }): Promise<any> {
+	/**
+	 * @description performs a AJAX POST
+	 * @param url url
+	 * @param ox options below:
+	 * 
+	 * - method: POST
+	 * - responseType: json|text. default is "text"
+	 * - data: object with values, it's sent in the body
+	 */
+	public static post(url: string, ox?: { [key: string]: any }): Promise<any> {
 		return (ox = ox || {}, ox.method = ajaxp.sPost, ox.data = ajaxp.query(ox.data, false), ajaxp.send(url, ox));
 	}
 

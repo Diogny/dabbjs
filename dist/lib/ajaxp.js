@@ -52,9 +52,27 @@ var ajaxp = /** @class */ (function () {
             }
         });
     };
+    /**
+     * @description performs a AJAX GET
+     * @param url url
+     * @param ox options below:
+     *
+     * - method: GET
+     * - responseType: json|text. default is "text"
+     * - data: object with values, it's sent appended to url ? &
+     */
     ajaxp.get = function (url, ox) {
         return (ox = ox || {}, ox.method = ajaxp.sGet, url += ajaxp.query(ox.data, true), ox.data = void 0, ajaxp.send(url, ox));
     };
+    /**
+     * @description performs a AJAX POST
+     * @param url url
+     * @param ox options below:
+     *
+     * - method: POST
+     * - responseType: json|text. default is "text"
+     * - data: object with values, it's sent in the body
+     */
     ajaxp.post = function (url, ox) {
         return (ox = ox || {}, ox.method = ajaxp.sPost, ox.data = ajaxp.query(ox.data, false), ajaxp.send(url, ox));
     };
