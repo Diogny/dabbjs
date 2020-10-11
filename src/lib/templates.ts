@@ -135,7 +135,7 @@ class Templates {
 }
 //https://gist.github.com/max-pub/a5c15b7831bbfaba7ad13acefc3d0781
 const XML = {
-	parse: (str: string, type: SupportedType = 'text/xml') => new DOMParser().parseFromString(str, type),  // like JSON.parse
+	parse: (str: string, type: DOMParserSupportedType = 'text/xml') => new DOMParser().parseFromString(str, type),  // like JSON.parse
 	stringify: (DOM: Node) => new XMLSerializer().serializeToString(DOM),                         // like JSON.stringify
 
 	transform: (xml: any, xsl: any) => {

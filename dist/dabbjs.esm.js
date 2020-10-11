@@ -1,7 +1,3 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
 /**
  * @description AJAX with promise
  */
@@ -1369,12 +1365,4 @@ var XML = {
     }
 };
 
-exports.Color = Color;
-exports.Point = Point;
-exports.Rect = Rect;
-exports.Size = Size;
-exports.Templates = Templates;
-exports.XML = XML;
-exports.ajaxp = ajaxp;
-exports.dab = dab;
-exports.utils = utils;
+export { Color, Point, Rect, Size, Templates, XML, ajaxp, dab, utils };

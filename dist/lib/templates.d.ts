@@ -20,7 +20,7 @@ declare class Templates {
     static parse(key: string, obj: any, beautify?: boolean): string;
 }
 declare const XML: {
-    parse: (str: string, type?: SupportedType) => Document;
+    parse: (str: string, type?: DOMParserSupportedType) => Document;
     stringify: (DOM: Node) => string;
     transform: (xml: any, xsl: any) => string | DocumentFragment;
     minify: (node: any) => string;

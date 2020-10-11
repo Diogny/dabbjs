@@ -1,7 +1,14 @@
+/**
+ * @description AJAX with promise
+ */
 export default abstract class ajaxp {
 
 	static sGet: string = "GET";
 	static sPost: string = "POST";
+
+	/**
+	 * @description template default object properties
+	 */
 	static xobj: object = {
 		method: ajaxp.sGet,
 		data: void 0,
@@ -9,8 +16,17 @@ export default abstract class ajaxp {
 	}
 	static rt: string = "responseType";
 
+	/**
+	 * @description gets HTTP AJAX object
+	 */
 	public static x(): XMLHttpRequest { return window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); }
 
+	/**
+	 * @description returns a url query object
+	 * @param data object with properties
+	 * @param ask true to append, false only props. GET appends to url, POST in body
+	 * @returns query string
+	 */
 	static query(data: { [key: string]: any }, ask: boolean) {
 		let query = [];
 		for (let key in data) {
@@ -19,13 +35,25 @@ export default abstract class ajaxp {
 		return ((ask && query.length) ? "?" : "") + query.join("&");
 	}
 
-	static update(io: any, obj: { [key: string]: any }) {
+	/**
+	 * @description copies default object properties not in dest object
+	 * @param io template object
+	 * @param obj dest object
+	 * @returns obj updated
+	 */
+	static update(io: { [key: string]: any }, obj: { [key: string]: any }) {
 		for (let p in io) {
 			obj[p] = obj[p] || io[p];
 		}
 		return obj;
 	}
 
+	/**
+	 * @description performs the AJAX request
+	 * @param url url
+	 * @param ox object with values
+	 * @returns a promise
+	 */
 	static send(url: string, ox: { [key: string]: any }): Promise<any> {
 		return new Promise(function (resolve, reject) {
 			let
