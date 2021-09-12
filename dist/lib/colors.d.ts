@@ -1,5 +1,6 @@
-import { IJsonColor } from "./interfaces";
-export default class Color implements IJsonColor {
+import { IJsonColor } from './interfaces.ts';
+
+declare class Color implements IJsonColor {
     r: number;
     g: number;
     b: number;
@@ -73,3 +74,5 @@ export default class Color implements IJsonColor {
      */
     static toJsonColor(c: Color): IJsonColor;
 }
+
+export default Color;

@@ -1,7 +1,7 @@
 /**
  * @description AJAX with promise
  */
-export default abstract class ajaxp {
+declare abstract class ajaxp {
     static sGet: string;
     static sPost: string;
     /**
@@ -69,3 +69,5 @@ export default abstract class ajaxp {
         [key: string]: any;
     }): Promise<any>;
 }
+
+export default ajaxp;

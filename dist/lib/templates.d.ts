@@ -27,4 +27,5 @@ declare const XML: {
     prettify: (node: any) => string;
     toString: (node: any, pretty: boolean, level?: number, singleton?: boolean) => string;
 };
+
 export { Templates, XML };

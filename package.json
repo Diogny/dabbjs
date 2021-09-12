@@ -1,13 +1,12 @@
 {
 	"name": "dabbjs",
 	"author": "Diogny A. B. <diognyab@outlook.com>",
-	"version": "0.0.19",
+	"version": "0.0.20",
 	"description": "general library",
 	"license": "MIT",
-	"main": "dist/index.js",
-	"module": "dist/dabbjs.esm.js",
-	"browser": "dist/dabbjs.umd.js",
-	"types": "dist/index.d.ts",
+	"main": "dist/dabbjs.js",
+	"module": "dist/dabbjs.mjs",
+	"types": "dist/dabbjs.d.ts",
 	"type": "module",
 	"homepage": "https://github.com/Diogny/dabbjs",
 	"bugs": {
@@ -24,12 +23,11 @@
 	],
 	"files": [
 		"dist/lib",
-		"dist/dabbjs.esm.js",
-		"dist/dabbjs.umd.js",
-		"dist/dabbjs.umd.min.js",
-		"dist/dabbjs.umd.min.js.map",
-		"dist/index.js",
-		"dist/index.d.ts"
+		"dist/dabbjs.d.ts",
+		"dist/dabbjs.js",
+		"dist/dabbjs.js.map",
+		"dist/dabbjs.mjs",
+		"dist/dabbjs.mjs.map"
 	],
 	"scripts": {
 		"preinstall": "node -e \"!process.env.npm_config_user_agent.startsWith('pnpm/') && !console.log('Use \\`npx pnpm install\\` to install dependencies in this repository\\n') && process.exit(1)\"",
@@ -44,6 +42,7 @@
 		"@types/xml2js": "^0.4.5",
 		"chai": "^4.2.0",
 		"eslint": "^7.11.0",
+		"esbuild": "^0.12.26",
 		"jsdom": "^16.4.0",
 		"mocha": "^8.1.3",
 		"ts-loader": "^8.0.4",
@@ -52,6 +51,8 @@
 		"xml2js": "^0.4.23",
 		"typescript": "^4.0.3",
 		"rollup": "^2.28.2",
+		"rollup-plugin-esbuild": "^4.5.0",
+		"rollup-plugin-dts": "^4.0.0",
 		"@rollup/plugin-commonjs": "^15.1.0",
 		"@rollup/plugin-node-resolve": "^9.0.0",
 		"rollup-plugin-typescript2": "^0.27.3",

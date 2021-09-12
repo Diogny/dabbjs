@@ -1,89 +1,77 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var ajaxp = /** @class */ (function () {
-    function ajaxp() {
+const _ajaxp = class {
+  static x() {
+    return window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  static query(data, ask) {
+    let query = [];
+    for (let key in data) {
+      query.push(encodeURIComponent(key) + "=" + encodeURIComponent(data[key]));
     }
-    ajaxp.x = function () { return window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); };
-    ajaxp.query = function (data, ask) {
-        var query = [];
-        for (var key in data) {
-            query.push(encodeURIComponent(key) + "=" + encodeURIComponent(data[key]));
+    return (ask && query.length ? "?" : "") + query.join("&");
+  }
+  static update(io, obj) {
+    for (let p in io) {
+      obj[p] = obj[p] || io[p];
+    }
+    return obj;
+  }
+  static send(url, ox) {
+    return new Promise(function(resolve, reject) {
+      let x = _ajaxp.x();
+      ox = _ajaxp.update(_ajaxp.xobj, ox);
+      x.open(ox.method, url, true);
+      x[_ajaxp.rt] = ox.responseType;
+      x.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+      x.onreadystatechange = function() {
+        let DONE = 4, OK = 200, NOT_MODIFIED = 304;
+        if (x.readyState == DONE) {
+          let data = "";
+          switch (x[_ajaxp.rt]) {
+            case "document":
+            case "json":
+              data = x.response;
+              break;
+            case "":
+            case "text":
+            default:
+              data = x.responseText;
+              break;
+          }
+          if (x.status === OK || x.status === NOT_MODIFIED) {
+            resolve(data);
+          } else {
+            reject({ status: x.status, d: x.response, xhr: x });
+          }
         }
-        return ((ask && query.length) ? "?" : "") + query.join("&");
-    };
-    ajaxp.update = function (io, obj) {
-        for (var p in io) {
-            obj[p] = obj[p] || io[p];
-        }
-        return obj;
-    };
-    ajaxp.send = function (url, ox) {
-        return new Promise(function (resolve, reject) {
-            var x = ajaxp.x();
-            ox = ajaxp.update(ajaxp.xobj, ox);
-            x.open(ox.method, url, true);
-            x[ajaxp.rt] = ox.responseType;
-            x.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); //PHP detect AJAX
-            x.onreadystatechange = function () {
-                var DONE = 4, // readyState 4 means the request is done.
-                OK = 200, // status 200 is a successful return.
-                NOT_MODIFIED = 304;
-                if (x.readyState == DONE) {
-                    var isJson = x[ajaxp.rt] && (x[ajaxp.rt] == "json");
-                    if (x.status === OK || x.status === NOT_MODIFIED) {
-                        resolve(isJson ? x.response : x.responseText);
-                    }
-                    else {
-                        reject({ status: x.status, d: x.response, xhr: x });
-                    }
-                }
-            };
-            if (ox.method == ajaxp.sPost) {
-                x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            }
-            x.onerror = function (e) {
-                reject(e);
-            };
-            try {
-                x.send(ox.data);
-            }
-            catch (e) {
-                reject({ status: x.status, statusText: x.statusText, xhr: x });
-            }
-        });
-    };
-    /**
-     * @description performs a AJAX GET
-     * @param url url
-     * @param ox options below:
-     *
-     * - method: GET
-     * - responseType: json|text. default is "text"
-     * - data: object with values, it's sent appended to url ? &
-     */
-    ajaxp.get = function (url, ox) {
-        return (ox = ox || {}, ox.method = ajaxp.sGet, url += ajaxp.query(ox.data, true), ox.data = void 0, ajaxp.send(url, ox));
-    };
-    /**
-     * @description performs a AJAX POST
-     * @param url url
-     * @param ox options below:
-     *
-     * - method: POST
-     * - responseType: json|text. default is "text"
-     * - data: object with values, it's sent in the body
-     */
-    ajaxp.post = function (url, ox) {
-        return (ox = ox || {}, ox.method = ajaxp.sPost, ox.data = ajaxp.query(ox.data, false), ajaxp.send(url, ox));
-    };
-    ajaxp.sGet = "GET";
-    ajaxp.sPost = "POST";
-    ajaxp.xobj = {
-        method: ajaxp.sGet,
-        data: void 0,
-        responseType: "text"
-    };
-    ajaxp.rt = "responseType";
-    return ajaxp;
-}());
-exports.default = ajaxp;
+      };
+      if (ox.method == _ajaxp.sPost) {
+        x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      }
+      x.onerror = function(e) {
+        reject(e);
+      };
+      try {
+        x.send(ox.data);
+      } catch (e) {
+        reject({ status: x.status, statusText: x.statusText, xhr: x });
+      }
+    });
+  }
+  static get(url, ox) {
+    return ox = ox || {}, ox.method = _ajaxp.sGet, url += _ajaxp.query(ox.data, true), ox.data = void 0, _ajaxp.send(url, ox);
+  }
+  static post(url, ox) {
+    return ox = ox || {}, ox.method = _ajaxp.sPost, ox.data = _ajaxp.query(ox.data, false), _ajaxp.send(url, ox);
+  }
+};
+let ajaxp = _ajaxp;
+ajaxp.sGet = "GET";
+ajaxp.sPost = "POST";
+ajaxp.xobj = {
+  method: _ajaxp.sGet,
+  data: void 0,
+  responseType: "text"
+};
+ajaxp.rt = "responseType";
+
+export default ajaxp;

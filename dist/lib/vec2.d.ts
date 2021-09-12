@@ -1,5 +1,6 @@
-import { IPoint } from "../lib/interfaces";
-export default class Vector2D {
+import { IPoint } from './interfaces.ts';
+
+declare class Vector2D {
     x: number;
     y: number;
     constructor(x: number, y: number);
@@ -55,3 +56,5 @@ export default class Vector2D {
      */
     static empty(): Vector2D;
 }
+
+export default Vector2D;
