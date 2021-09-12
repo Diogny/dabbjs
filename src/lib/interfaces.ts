@@ -19,3 +19,9 @@ export interface ISize {
 }
 
 export interface IRect extends IPoint, ISize { }
+
+export interface IJsonColor {
+	r: number;
+	g: number;
+	b: number;
+}

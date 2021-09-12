@@ -50,7 +50,7 @@ export default abstract class ajaxp {
      * @param ox options below:
      *
      * - method: GET
-     * - responseType: json|text. default is "text"
+     * - responseType: json|text|document. default is "text", for xml use document
      * - data: object with values, it's sent appended to url ? &
      */
     static get(url: string, ox?: {
@@ -62,7 +62,7 @@ export default abstract class ajaxp {
      * @param ox options below:
      *
      * - method: POST
-     * - responseType: json|text. default is "text"
+     * - responseType: json|text|document. default is "text", for xml use document
      * - data: object with values, it's sent in the body
      */
     static post(url: string, ox?: {

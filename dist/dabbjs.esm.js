@@ -51,9 +51,21 @@ var ajaxp = /** @class */ (function () {
                 OK = 200, // status 200 is a successful return.
                 NOT_MODIFIED = 304;
                 if (x.readyState == DONE) {
-                    var isJson = x[ajaxp.rt] && (x[ajaxp.rt] == "json");
+                    var data = '';
+                    //isJson = x[ajaxp.rt] && (x[ajaxp.rt] == "json");
+                    switch (x[ajaxp.rt]) {
+                        case 'document':
+                        case 'json':
+                            data = x.response;
+                            break;
+                        case '':
+                        case 'text':
+                        default:
+                            data = x.responseText;
+                            break;
+                    }
                     if (x.status === OK || x.status === NOT_MODIFIED) {
-                        resolve(isJson ? x.response : x.responseText);
+                        resolve(data);
                     }
                     else {
                         reject({ status: x.status, d: x.response, xhr: x });
@@ -80,7 +92,7 @@ var ajaxp = /** @class */ (function () {
      * @param ox options below:
      *
      * - method: GET
-     * - responseType: json|text. default is "text"
+     * - responseType: json|text|document. default is "text", for xml use document
      * - data: object with values, it's sent appended to url ? &
      */
     ajaxp.get = function (url, ox) {
@@ -92,7 +104,7 @@ var ajaxp = /** @class */ (function () {
      * @param ox options below:
      *
      * - method: POST
-     * - responseType: json|text. default is "text"
+     * - responseType: json|text|document. default is "text", for xml use document
      * - data: object with values, it's sent in the body
      */
     ajaxp.post = function (url, ox) {
@@ -892,7 +904,7 @@ var filterArray = function (obj, fn) {
  * @param value undefined to get value, otherwise
  */
 var prop = function (o, path, value) {
-    var r = path.split('.').map(function (s) { return s.trim(); }), last = r.pop(), result = void 0;
+    var r = path.split('.').map(function (s) { return s.trim(); }), last = r.pop(), result;
     for (var i = 0; !!o && i < r.length; i++) {
         o = o[r[i]];
     }
@@ -1182,15 +1194,76 @@ var Rect = /** @class */ (function () {
 //Color class is adapted from:
 //https://github.com/Microsoft/TypeScriptSamples/blob/master/raytracer/raytracer.ts
 var Color = /** @class */ (function () {
+    /**
+     * creates a new color
+     * @param r red 0..1
+     * @param g green 0..1
+     * @param b blue 0..1
+     */
     function Color(r, g, b) {
         this.r = r;
         this.g = g;
         this.b = b;
     }
+    /**
+     * clones this color
+     * @returns a cloned color
+     */
+    Color.prototype.clone = function () {
+        return Color.create(this.r, this.g, this.b);
+    };
+    /**
+     * creates a new color
+     * @param r red 0..1
+     * @param g green 0..1
+     * @param b blue 0..1
+     * @returns a new color
+     */
+    Color.create = function (r, g, b) {
+        return new Color(r, g, b);
+    };
+    /**
+     *
+     * @param k multiplier
+     * @param v color
+     * @returns a new color
+     */
     Color.scale = function (k, v) { return new Color(k * v.r, k * v.g, k * v.b); };
+    /**
+     *
+     * @param v1 color 1
+     * @param v2 color 2
+     * @returns a new color
+     */
     Color.plus = function (v1, v2) { return new Color(v1.r + v2.r, v1.g + v2.g, v1.b + v2.b); };
+    /**
+     *
+     * @param v1 color 1
+     * @param v2 color 2
+     * @returns a new color
+     */
     Color.times = function (v1, v2) { return new Color(v1.r * v2.r, v1.g * v2.g, v1.b * v2.b); };
-    Color.toDrawingColor = function (c) {
+    Color.toHex = function (c) {
+        return "#" + ((1 << 24) + (c.r << 16) + (c.g << 8) + c.b).toString(16).slice(1);
+    };
+    Color.fromHex = function (hex) {
+        var bigint = parseInt(hex), r = (bigint >> 16) & 255, g = (bigint >> 8) & 255, b = bigint & 255;
+        /*
+        0xffa795
+        16754581
+        parseInt(0xffa795)
+        16754581
+        parseInt("0xffa795")
+        16754581
+        */
+        return { r: r, g: g, b: b };
+    };
+    /**
+     * converts to a normalized color
+     * @param c a color
+     * @returns a json color structure
+     */
+    Color.toJsonColor = function (c) {
         var legalize = function (d) { return d > 1 ? 1 : d; };
         return {
             r: Math.floor(legalize(c.r) * 255),
@@ -1198,11 +1271,26 @@ var Color = /** @class */ (function () {
             b: Math.floor(legalize(c.b) * 255)
         };
     };
-    Color.white = new Color(1.0, 1.0, 1.0);
-    Color.grey = new Color(0.5, 0.5, 0.5);
-    Color.black = new Color(0.0, 0.0, 0.0);
-    Color.background = Color.black;
-    Color.defaultColor = Color.black;
+    /**
+     * white
+     */
+    Color.white = Color.create(1.0, 1.0, 1.0);
+    /**
+     * gray
+     */
+    Color.grey = Color.create(0.5, 0.5, 0.5);
+    /**
+     * black
+     */
+    Color.black = Color.create(0.0, 0.0, 0.0);
+    /**
+     * default background: white
+     */
+    Color.background = Color.white.clone();
+    /**
+     * default color: black
+     */
+    Color.defaultColor = Color.black.clone();
     return Color;
 }());
 

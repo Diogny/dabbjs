@@ -169,12 +169,12 @@ export const prop = function (o: { [id: string]: any }, path: string, value?: an
 	let
 		r = path.split('.').map(s => s.trim()),
 		last = <string>r.pop(),
-		result = <any>void 0;
+		result;
 	for (let i = 0; !!o && i < r.length; i++) {
 		o = o[r[i]]
 	}
 	result = o && o[last];
-	return value != undefined ? ((result != undefined) && (o[<string>last] = value, true)) : result
+	return value != undefined ? ((result != undefined) && (o[last] = value, true)) : result
 };
 
 /**

@@ -69,9 +69,21 @@ export default abstract class ajaxp {
 					NOT_MODIFIED = 304;
 				if (x.readyState == DONE) {
 					let
-						isJson = x[ajaxp.rt] && (x[ajaxp.rt] == "json");
+						data: any = '';
+					//isJson = x[ajaxp.rt] && (x[ajaxp.rt] == "json");
+					switch (x[ajaxp.rt]) {
+						case 'document':
+						case 'json':
+							data = x.response;
+							break;
+						case '':
+						case 'text':
+						default:
+							data = x.responseText;
+							break;
+					}
 					if (x.status === OK || x.status === NOT_MODIFIED) {
-						resolve(isJson ? x.response : x.responseText);
+						resolve(data);
 					} else {
 						reject({ status: x.status, d: x.response, xhr: x });
 					}
@@ -97,7 +109,7 @@ export default abstract class ajaxp {
 	 * @param ox options below:
 	 * 
 	 * - method: GET
-	 * - responseType: json|text. default is "text"
+	 * - responseType: json|text|document. default is "text", for xml use document
 	 * - data: object with values, it's sent appended to url ? &
 	 */
 	public static get(url: string, ox?: { [key: string]: any }): Promise<any> {
@@ -110,7 +122,7 @@ export default abstract class ajaxp {
 	 * @param ox options below:
 	 * 
 	 * - method: POST
-	 * - responseType: json|text. default is "text"
+	 * - responseType: json|text|document. default is "text", for xml use document
 	 * - data: object with values, it's sent in the body
 	 */
 	public static post(url: string, ox?: { [key: string]: any }): Promise<any> {

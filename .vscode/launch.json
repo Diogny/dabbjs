@@ -8,7 +8,7 @@
 			"name": "Launch Chrome",
 			"request": "launch",
 			"type": "pwa-chrome",
-			"url": "http://localhost:8080",
+			"url": "http://localhost:8989",
 			"webRoot": "${workspaceFolder}"
 		},
 		{
@@ -54,5 +54,11 @@
 			],
 			"outputCapture": "std"
 		},
+		{
+			"name": "Launch Microsoft Edge and open the Edge DevTools",
+			"request": "launch",
+			"type": "vscode-edge-devtools.debug",
+			"url": "" // Provide your project's url to finish configuring
+		}
 	]
 }

@@ -83,5 +83,35 @@ export default [
 			{ file: pkg.main, format: 'cjs' },	//index.js	commonjs Node
 			{ file: pkg.module, format: 'es' }	//ES
 		]
+	},
+	{
+		input: './src/tests/server.ts',
+		plugins: [
+			typescript()
+		],
+		output: [
+			{
+				name: 'server',
+				file: "dist/tests/server.js"
+			}
+		]
+	},
+	{
+		input: './src/tests/client.ts',
+		plugins: [
+			typescript()
+		],
+		output: [
+			{
+				name: 'server',
+				file: "dist/tests/client.js",
+				plugins: [
+					htmlTemplate({
+						template: 'src/tests/client.html',
+						target: 'dist/tests/client.html',
+					})
+				]
+			}
+		]
 	}
 ];

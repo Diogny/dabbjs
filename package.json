@@ -1,13 +1,14 @@
 {
 	"name": "dabbjs",
 	"author": "Diogny A. B. <diognyab@outlook.com>",
-	"version": "0.0.18",
+	"version": "0.0.19",
 	"description": "general library",
 	"license": "MIT",
 	"main": "dist/index.js",
 	"module": "dist/dabbjs.esm.js",
 	"browser": "dist/dabbjs.umd.js",
 	"types": "dist/index.d.ts",
+	"type": "module",
 	"homepage": "https://github.com/Diogny/dabbjs",
 	"bugs": {
 		"url": "https://github.com/Diogny/dabbjs/issues"
