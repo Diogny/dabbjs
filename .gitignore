@@ -9,6 +9,7 @@ dist/lib/
 .DS_Store
 coverage
 *.log
+*.rar
 
 /dist/esbuild/*
 notes.md
