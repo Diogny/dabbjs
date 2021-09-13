@@ -1,6 +1,5 @@
-import { IRect, IPoint } from './interfaces.ts';
-
-declare class Rect implements IRect {
+import { IPoint, IRect } from "./interfaces";
+export default class Rect implements IRect {
     x: number;
     y: number;
     width: number;
@@ -84,5 +83,3 @@ declare class Rect implements IRect {
      */
     get str(): string;
 }
-
-export default Rect;

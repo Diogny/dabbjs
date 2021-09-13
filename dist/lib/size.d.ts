@@ -1,6 +1,5 @@
-import { ISize } from './interfaces.ts';
-
-declare class Size implements ISize {
+import { ISize } from './interfaces';
+export default class Size implements ISize {
     width: number;
     height: number;
     constructor(width: number, height: number);
@@ -24,5 +23,3 @@ declare class Size implements ISize {
     toString(options?: number): string;
     get str(): string;
 }
-
-export default Size;

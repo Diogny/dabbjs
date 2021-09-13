@@ -1,8 +1,31 @@
+/**
+ * Template engine
+ */
 declare class Templates {
+    /**
+     * map of all templates
+     */
     private static map;
+    /**
+     * gets a template
+     * @param key template's key
+     * @returns template text
+     */
     static get(key: string): string;
+    /**
+     * saves a template
+     * @param key template's key
+     * @param value template's text
+     */
     static set(key: string, value: string): void;
+    /**
+     * returns a mount of registered templates
+     */
     static get size(): number;
+    /**
+     * register a json key-value pair with templates
+     * @param obj key-value pair of template's key with it's text
+     */
     static register(obj: {
         [key: string]: string;
     }): void;
@@ -27,5 +50,4 @@ declare const XML: {
     prettify: (node: any) => string;
     toString: (node: any, pretty: boolean, level?: number, singleton?: boolean) => string;
 };
-
 export { Templates, XML };

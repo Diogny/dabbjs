@@ -1,27 +1,41 @@
-import Point from "./point";
-import Size from "./size";
-import Rect from "./rect";
+/**
+ * Equal function
+ */
+export type IEqual = (p: IPoint | ISize | IRect) => boolean;	// | Unit
 
-export type IEqual = (p: Point | Size | Rect) => boolean;	// | Unit
-
+/**
+ * 2D Point interface
+ */
 export interface IPoint {
-	x: number;
-	y: number;
+  x: number;
+  y: number;
 }
 
+/**
+ * 3D Point interface
+ */
 export interface IPoint3D extends IPoint {
-	z: number;
+  z: number;
 }
 
+/**
+ * Size interface
+ */
 export interface ISize {
-	width: number;
-	height: number;
+  width: number;
+  height: number;
 }
 
+/**
+ * Rectangle interface
+ */
 export interface IRect extends IPoint, ISize { }
 
-export interface IJsonColor {
-	r: number;
-	g: number;
-	b: number;
+/**
+ * Color interface
+ */
+export interface IColor {
+  r: number;
+  g: number;
+  b: number;
 }

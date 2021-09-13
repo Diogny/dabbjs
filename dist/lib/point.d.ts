@@ -1,9 +1,8 @@
-import { IPoint, ISize } from './interfaces.ts';
-
+import { IPoint, ISize } from './interfaces';
 /**
  * @description a 2 dimension integer point class
  */
-declare class Point implements IPoint {
+export default class Point implements IPoint {
     x: number;
     y: number;
     /**
@@ -73,5 +72,3 @@ declare class Point implements IPoint {
     static plus(v1: IPoint, v2: IPoint): Point;
     static inside(p: IPoint, s: ISize): boolean;
 }
-
-export default Point;
