@@ -6,6 +6,9 @@
 .idea/*
 /docs/
 
+.npmignore
+.gitignore
+
 coverage
 *.log
 .gitlab-ci.yml

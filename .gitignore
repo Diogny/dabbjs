@@ -5,6 +5,9 @@
 /docs/
 .idea/*
 
+.npmignore
+.gitignore
+
 dist/lib/
 .DS_Store
 coverage
