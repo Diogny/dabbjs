@@ -1,7 +1,7 @@
 {
 	"name": "dabbjs",
 	"author": "Diogny A. B. <diognyab@outlook.com>",
-	"version": "0.0.22",
+	"version": "0.0.23",
 	"description": "general javascript library",
 	"license": "MIT",
 	"main": "./dist/index.js",
