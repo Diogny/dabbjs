@@ -9,30 +9,11 @@ import Vector2D from "./vec2d";
 export const range = (s: number, e: number) => Array.from('x'.repeat(e - s), (_, i) => s + i);
 
 /**
- * return unique items in array
- * @param x array
- */
-export const unique = (x: any[]): any[] => x.filter((elem, index) => x.indexOf(elem) === index);
-
-export const union = (x: any[], y: any[]): any[] => unique(x.concat(y));
-
-/**
- * LINQ select many
- * @param input
- * @param selectListFn
- */
-export const selectMany = <TIn, TOut>(input: TIn[], selectListFn: (t: TIn) => TOut[]): TOut[] =>
-  input.reduce((out, inx) => {
-    out.push(...selectListFn(inx));
-    return out;
-  }, new Array<TOut>());
-
-/**
  * @description loops through an object properties and returns it in a function
  * @param obj an object
  * @param fn a function as (value: any, key: string, ndx: number) => void
  */
-export const each = (obj: { [id: string]: any }, fn: (value: any, key: string, ndx: number) => void) => {
+export const each = <T>(obj: { [id: string]: any }, fn: (value: T, key: string, ndx: number) => void) => {
   if (!isFn(fn) || !obj)
     return;
   let ndx = 0;
@@ -46,9 +27,9 @@ export const each = (obj: { [id: string]: any }, fn: (value: any, key: string, n
  * @param obj an object
  * @param fn a function as (value: any, key: string, ndx: number) => any
  */
-export const map = (obj: { [id: string]: any }, fn: (value: any, key: string, ndx: number) => any) => {
-  let arr: any[] = [];
-  each(obj, (value: any, key: string, ndx: number) => {
+export const map = <T>(obj: { [id: string]: any }, fn: (value: T, key: string, ndx: number) => T) => {
+  let arr: T[] = [];
+  each(obj, (value: T, key: string, ndx: number) => {
     arr.push(fn(value, key, ndx));
   });
   return arr;
@@ -59,9 +40,9 @@ export const map = (obj: { [id: string]: any }, fn: (value: any, key: string, nd
  * @param obj an object
  * @param fn a function as (value: any, key: string, ndx: number) => any
  */
-export const filter = (obj: { [id: string]: any }, fn: (value: any, key: string, ndx: number) => any) => {
+export const filter = <T>(obj: { [id: string]: any }, fn: (value: T, key: string, ndx: number) => T) => {
   let o: { [id: string]: any } = {};
-  each(obj, (value: any, key: string, ndx: number) => {
+  each(obj, (value: T, key: string, ndx: number) => {
     fn(value, key, ndx) && (o[key] = value);
   });
   return o;
@@ -72,9 +53,9 @@ export const filter = (obj: { [id: string]: any }, fn: (value: any, key: string,
  * @param obj an object to filter
  * @param fn if it returns true array[]= value (key is lost), if object array[] = object, otherwise discarded
  */
-export const filterArray = (obj: { [id: string]: any }, fn: (value: any, key: string, ndx: number) => any) => {
-  let o: any[] = [];
-  each(obj, (value: any, key: string, ndx: number) => {
+export const filterArray = <T>(obj: { [id: string]: any }, fn: (value: T, key: string, ndx: number) => T) => {
+  let o: T[] = [];
+  each(obj, (value: T, key: string, ndx: number) => {
     let
       res = fn(value, key, ndx);
     if (res === true)
@@ -102,7 +83,6 @@ export const prop = function (o: { [id: string]: any }, path: string, value?: an
   result = o && o[last];
   return value != undefined ? ((result != undefined) && (o[last] = value, true)) : result
 };
-
 
 /**
  * copy all properties in src to obj, and returns obj

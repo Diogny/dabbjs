@@ -26,8 +26,9 @@ export default class Point implements IPoint {
    * @param p point
    */
   public distance(p: IPoint): number {
-    var dx = this.x - p.x;
-    var dy = this.y - p.y;
+    let
+      dx = this.x - p.x,
+      dy = this.y - p.y;
     return Math.sqrt(dx * dx + dy * dy);
   }
 
@@ -95,7 +96,7 @@ export default class Point implements IPoint {
    * @param {number} angle angle to rotate
    */
   static rotateBy(x: number, y: number, cx: number, cy: number, angle: number): IPoint {
-    var radians = (Math.PI / 180) * angle,
+    let radians = (Math.PI / 180) * angle,
       cos = Math.cos(radians),
       sin = Math.sin(radians),
       nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,

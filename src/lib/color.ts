@@ -63,27 +63,27 @@ export default class Color implements IColor {
   /**
    * white
    */
-  static white = Color.create(1.0, 1.0, 1.0);
+  static readonly white = Color.create(1.0, 1.0, 1.0);
 
   /**
    * gray
    */
-  static grey = Color.create(0.5, 0.5, 0.5);
+  static readonly grey = Color.create(0.5, 0.5, 0.5);
 
   /**
    * black
    */
-  static black = Color.create(0.0, 0.0, 0.0);
+  static readonly black = Color.create(0.0, 0.0, 0.0);
 
   /**
    * default background: white
    */
-  static background = Color.white.clone();
+  static readonly background = Color.white.clone();
 
   /**
    * default color: black
    */
-  static defaultColor = Color.black.clone();
+  static readonly defaultColor = Color.black.clone();
 
   static toHex(c: Color): string {
     return "#" + ((1 << 24) + (c.r << 16) + (c.g << 8) + c.b).toString(16).slice(1);
@@ -112,7 +112,8 @@ export default class Color implements IColor {
    * @returns a json color structure
    */
   static toJsonColor(c: Color): IColor {
-    var legalize = (d: number) => d > 1 ? 1 : d;
+    let
+      legalize = (d: number) => d > 1 ? 1 : d;
     return {
       r: Math.floor(legalize(c.r) * 255),
       g: Math.floor(legalize(c.g) * 255),

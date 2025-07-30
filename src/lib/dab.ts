@@ -17,38 +17,65 @@ const c: any = {
   svgNs: "http://www.w3.org/2000/svg"
 };
 
+/**
+ * constant object created so {@link ts}(t: any) doesn't have to create an object in each call
+ */
+const OBJ = {};
+
 export { c as consts };
 
-export const ts = (t: any) => ({}).toString.call(t);
-
 /**
- * it can be extended later to array [] and object {}
- * @param s any
+ * type of argument
+ *
+ * @param t any
+ * @returns '[object Undefined | Null | Number | String | Boolean | Array | Object | Function, Date, RegExp]'
  */
-export const empty = (s: any): boolean => typeof s == void 0 || !s || (isStr(s) && s.match(/^ *$/) !== null);
+export const ts = (t: any) => OBJ.toString.call(t);
 
 /**
- * returned values: array, date,	function, number, object, regexp, string, undefined  	global,	JSON, null
+ * returned values: undefined, null, number, string, boolean, array, object, function, date, regexp
  * @param o any
  */
 export const typeOf = (o: any) => ts(o).slice(8, -1).toLowerCase();
 
+/**
+ * returns true if argument is an string
+ * @param f any
+ * @returns
+ */
+export const isStr = (s: any) => typeof s === c.s;
+
+/**
+ * returns true if argument is a function
+ * @param f any
+ * @returns
+ */
 export const isFn = (f: any) => typeof f === c.fn;
 
 /**
- * defined,	undefined === void 0
+ * it can be extended later object {}
+ * @param s any
+ * @returns `true` for undefined, void 0, 0, false, "", "  ", []
+ */
+export const empty = (s: any): boolean => {
+  const t_s = typeof s;
+  return t_s == c.u || !s || (t_s === c.s && s.match(/^ *$/) !== null) || (Array.isArray(s) && !s.length);
+}
+
+/**
+ * returns true if argument is defined,
+ *
+ * undefined === void 0
+ *
  * @param t any
  */
 export const dfnd = (t: any) => t !== void 0 && t !== null;
 
-export const isStr = (s: any) => typeof s === c.s;
-
 /**
- * true for Array, pojo retruns true only for a plain old object {}
- * @param t any
+ * returns true if argument is an array
+ * @param f any
+ * @returns
  */
-export const isObj = (t: any) => typeof t === c.o;
-
 export const isArr = (t: any) => Array.isArray(t); // typeOf(t) === c.a;
 
 /**
@@ -106,12 +133,28 @@ export const round = (v: number, decimals: number) => {
   return (decimals = decimals | 0, Number(Math.round(Number(v + "e" + decimals)) + "e-" + decimals));
 } //force toArray
 
+/**
+ * converts a `defined` argument value to an array
+ * @param o any
+ * @returns
+ */
 export const splat = <T>(o: any): T[] => isArr(o) ? o : (dfnd(o) ? [o] : []);
 
+/**
+ * makes a child inherit or descend from its parent
+ * @param parent parent
+ * @param child child
+ */
 export const inherit = (parent: any, child: any) => {
   child.prototype = Object.create(parent.prototype);
   child.prototype.constructor = child;
 }
+
+/**
+ * returns true if argument is an object
+ * @param t any
+ */
+export const isObj = (t: any) => ts(t) == '[object Object]';
 
 /**
  * plainObj   Plain Old JavaScript Object (POJO) {}
@@ -171,7 +214,7 @@ export const defEnum = (e: any) => {
  */
 export const dP = (obj: any, propName: string, attrs: object) => Object.defineProperty(obj, propName, attrs);
 
-var a = {
+const a = {
   'TRUE': true,
   'True': true,
   'true': true,

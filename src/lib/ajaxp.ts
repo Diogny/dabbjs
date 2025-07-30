@@ -3,18 +3,18 @@
  */
 export default abstract class Ajaxp {
 
-  static sGet: string = "GET";
-  static sPost: string = "POST";
+  static readonly sGet: string = "GET";
+  static readonly sPost: string = "POST";
 
   /**
    * @description template default object properties
    */
-  static xobj: object = {
+  static readonly xobj: object = {
     method: Ajaxp.sGet,
     data: void 0,
     responseType: "text"
   }
-  static rt: string = "responseType";
+  static readonly rt: string = "responseType";
 
   /**
    * @description gets HTTP AJAX object
@@ -54,7 +54,7 @@ export default abstract class Ajaxp {
    * @param ox object with values
    * @returns a promise
    */
-  static send(url: string, ox: { [key: string]: any }): Promise<any> {
+  static send<T>(url: string, ox: { [key: string]: any }): Promise<T> {
     return new Promise(function (resolve, reject) {
       let
         x = Ajaxp.x();
@@ -83,9 +83,9 @@ export default abstract class Ajaxp {
               break;
           }
           if (x.status === OK || x.status === NOT_MODIFIED) {
-            resolve(data);
+            resolve(<T>data);
           } else {
-            reject({ status: x.status, d: x.response, xhr: x });
+            reject(new Error(`Error ${x.status} ${x.statusText} on Ready`));  //{ status: x.status, d: x.response, xhr: x }
           }
         }
       };
@@ -93,13 +93,14 @@ export default abstract class Ajaxp {
         x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       }
       x.onerror = function (e: any) {
-        reject(e);
+        reject(new Error(e));
       };
-      try {
-        x.send(ox.data);
-      } catch (e) {
-        reject({ status: x.status, statusText: x.statusText, xhr: x });
-      }
+      x.send(ox.data);
+      // try {
+      //   x.send(ox.data);
+      // } catch (e) {
+      //   reject(new Error(`Error status: ${x.status} ${x.statusText} on Send`)); //{ status: x.status, statusText: x.statusText, xhr: x }
+      // }
     });
   }
 
@@ -112,8 +113,8 @@ export default abstract class Ajaxp {
    * - responseType: json|text|document. default is "text", for xml use document
    * - data: object with values, it's sent appended to url ? &
    */
-  public static get(url: string, ox?: { [key: string]: any }): Promise<any> {
-    return (ox = ox || {}, ox.method = Ajaxp.sGet, url += Ajaxp.query(ox.data, true), ox.data = void 0, Ajaxp.send(url, ox))
+  public static get<T>(url: string, ox?: { [key: string]: any }): Promise<T> {
+    return (ox = ox || {}, ox.method = Ajaxp.sGet, url += Ajaxp.query(ox.data, true), ox.data = void 0, Ajaxp.send<T>(url, ox))
   }
 
   /**
@@ -125,8 +126,8 @@ export default abstract class Ajaxp {
    * - responseType: json|text|document. default is "text", for xml use document
    * - data: object with values, it's sent in the body
    */
-  public static post(url: string, ox?: { [key: string]: any }): Promise<any> {
-    return (ox = ox || {}, ox.method = Ajaxp.sPost, ox.data = Ajaxp.query(ox.data, false), Ajaxp.send(url, ox));
+  public static post<T>(url: string, ox?: { [key: string]: any }): Promise<T> {
+    return (ox = ox || {}, ox.method = Ajaxp.sPost, ox.data = Ajaxp.query(ox.data, false), Ajaxp.send<T>(url, ox));
   }
 
 }

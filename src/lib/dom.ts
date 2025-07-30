@@ -4,7 +4,7 @@ import { empty, isFn, isStr, consts } from "./dab"
  * @description returns true if an element if an HTML or SVG DOM element
  * @param e {any} an element
  */
-export const isDOM = (e: any) => e instanceof window.HTMLElement || e instanceof window.HTMLDocument;
+export const isDOM = (e: any) => e instanceof HTMLElement;  // || e instanceof Document;
 
 /**
  * css(el, { background: 'green', display: 'none', 'border-radius': '5px' });
@@ -26,12 +26,29 @@ export const css = (el: HTMLElement, styles: { [id: string]: any } | string) => 
  * @description get/set html element attribute
  * @param el HTML element
  * @param attrs string to get it's attribute, or an object with attributes to set
+ * @param value when defined
+ *
+ * should be attr(el: HTMLElement, attr: { [id: string]: any } | string, value?: string)
+ *
+ * when attr is an object, it sets all attributes in the object
+ *
+ * when value is undefined, it returns the attribute value if any
+ * when value is an string
  */
-export const attr = function (el: HTMLElement, attrs: { [id: string]: any } | string) {
-  if (isStr(attrs))
-    return el.getAttribute(<string>attrs);
-  for (let attr in <{ [id: string]: any }>attrs)
-    el.setAttribute(attr, (<any>attrs)[attr]);
+export const attr = function (el: HTMLElement, attrs: { [id: string]: any } | string, value?: string) {
+  if (typeof attrs == "string") {
+    if (value) {
+      //set single attr and return HTMLElement
+      el.setAttribute(attrs, value);
+    } else {
+      //return HTMLElement single attribute value
+      return el.getAttribute(attrs);
+    }
+  } else {
+    //assign object of attributes to HTMLElement
+    for (let attr in <{ [id: string]: any }>attrs)
+      el.setAttribute(attr, (<any>attrs)[attr]);
+  }
   return el;
 }
 
@@ -42,7 +59,7 @@ export const attr = function (el: HTMLElement, attrs: { [id: string]: any } | st
  * @param fn listener function
  * @param b boolean | AddEventListenerOptions | undefined
  */
-export const aEL = (el: HTMLElement, type: string, fn: Function, b?: boolean | AddEventListenerOptions | undefined): void => el.addEventListener(type, <any>fn, b);
+export const aEL = (el: HTMLElement, type: string, fn: Function, b?: boolean | AddEventListenerOptions): void => el.addEventListener(type, <any>fn, b);
 
 /**
  * @description removes an event listener from an element
@@ -51,7 +68,7 @@ export const aEL = (el: HTMLElement, type: string, fn: Function, b?: boolean | A
  * @param fn
  * @param b
  */
-export const rEL = (el: HTMLElement, type: string, fn: Function, b?: boolean | AddEventListenerOptions | undefined): void => el.removeEventListener(type, <any>fn, b);
+export const rEL = (el: HTMLElement, type: string, fn: Function, b?: boolean | AddEventListenerOptions): void => el.removeEventListener(type, <any>fn, b);
 
 /**
  * @description adds an event listener to the document
@@ -59,7 +76,7 @@ export const rEL = (el: HTMLElement, type: string, fn: Function, b?: boolean | A
  * @param fn listener function
  * @param b boolean | AddEventListenerOptions | undefined
  */
-export const daEl = (type: string, fn: Function, b?: boolean | AddEventListenerOptions | undefined): void => document.addEventListener(type, <any>fn, b);
+export const daEl = (type: string, fn: Function, b?: boolean | AddEventListenerOptions): void => document.addEventListener(type, <any>fn, b);
 
 /**
  * @description removes an event listener from the document
@@ -68,7 +85,7 @@ export const daEl = (type: string, fn: Function, b?: boolean | AddEventListenerO
  * @param fn
  * @param b
  */
-export const drEL = (type: string, fn: Function, b?: boolean | AddEventListenerOptions | undefined): void => document.removeEventListener(type, <any>fn, b);
+export const drEL = (type: string, fn: Function, b?: boolean | AddEventListenerOptions): void => document.removeEventListener(type, <any>fn, b);
 
 /**
  * @description appends a child element to it's new parent
@@ -195,6 +212,85 @@ export const html = (html: string): HTMLElement => {
   template.innerHTML = html;
   return <HTMLElement>template.content.firstChild;
 };
+
+export const registerCustomElement = (name: string, constructor: CustomElementConstructor): boolean => {
+  //https://developer.mozilla.org/en-US/docs/Web/API/Window/customElements
+  if (customElements.get(name))
+    return false;
+  customElements.define(name, constructor);
+  return true;
+}
+
+//If you use a "<div/>" tag, it will strip out all the html.
+//If you use a "<textarea/>" tag, it will preserve the html tags.
+
+/**
+ *
+ * @param text
+ * @returns
+ */
+export const decodeHTMLEntities = (text: string): string => {
+  let
+    textArea = document.createElement('textarea');
+  textArea.innerHTML = text;
+  return textArea.value;
+}
+
+/**
+ *
+ * @param text
+ * @returns
+ */
+export const encodeHTMLEntities = (text: string): string => {
+  let
+    textArea = document.createElement('textarea');
+  textArea.innerText = text;
+  return textArea.innerHTML;
+}
+
+/**
+ *
+ * @param str
+ * @returns
+ */
+export const escapeChars = (str: string): string => {
+  let
+    div = html(str);
+  div.innerText = str;
+  return div.innerHTML
+}
+
+
+/**
+ * saves CSS in Document DOM inside SVG element styles
+ * @param dom
+ * @returns
+ */
+export const svgStyles = (dom: HTMLElement): HTMLElement => {
+  let used = "";
+  let sheets = document.styleSheets;
+  for (let i = 0; i < sheets.length; i++) {
+    let rules = sheets[i].cssRules;
+    for (let j = 0; j < rules.length; j++) {
+      let rule = <CSSStyleRule>rules[j];
+      if (typeof (rule.style) != "undefined") {
+        let elems = dom.querySelectorAll(rule.selectorText);
+        if (elems.length > 0) {
+          used += rule.selectorText + " { " + rule.style.cssText + " }\n";
+        }
+      }
+    }
+  }
+
+  let s = document.createElement('style');
+  s.setAttribute('type', 'text/css');
+  s.innerHTML = "<![CDATA[\n" + used + "\n]]>";
+
+  let defs = document.createElement('defs');
+  defs.appendChild(s);
+  dom.insertBefore(defs, dom.firstChild);
+  return dom
+}
 
 /**
  * @description retrieves all DOM script templates

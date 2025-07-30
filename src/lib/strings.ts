@@ -5,7 +5,7 @@
  * @param ch pad char
  */
 export const pad = (t: string, e: number, ch?: any) =>
-  new Array(Math.max(0, (e || 2) + 1 - String(t).length)).join(ch ? ch : '0') + t;
+  new Array(Math.max(0, (e || 2) + 1 - String(t).length)).join(ch || '0') + t;
 
 /**
 *
@@ -33,7 +33,7 @@ export const formatNumber = (n: number, width: number) => padStr(n + "", width);
  * @param str font-size  -webkit-box-shadow
  * @@returns fontSize  WebkitBoxShadow
  */
-export const cssCamel = (str: string) => str.replace(/\-([a-z])/gi, (_match, group) => group.toUpperCase())
+export const cssCamel = (str: string) => str.replace(/-([a-z])/gi, (_match, group) => group.toUpperCase())
 
 /**
  * @description removes camel of a web css property
