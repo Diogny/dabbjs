@@ -1,7 +1,7 @@
 import { dfnd, isFn, pojo } from "./dab";
 import { IPoint } from "./interfaces";
 import { Point } from "./point";
-import Vector2D from "./vec2d";
+import { Vector2D } from "./vec2d";
 
 //https://plainjs.com/javascript/traversing/match-element-selector-52/
 //https://plainjs.com/javascript/traversing/get-siblings-of-an-element-40/
