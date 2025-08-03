@@ -39,7 +39,7 @@ class Templates {
   }
 
   /**
-   * @description simple template parser
+   * simple template parser
    * @param key template's key name
    * @param obj object to get values from
    */
@@ -53,7 +53,7 @@ class Templates {
   }
 
   /**
-   * @description full template parser
+   * full template parser
    * @param key template's key name
    * @param obj object to get values from
    */

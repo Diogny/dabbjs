@@ -5,14 +5,14 @@ import { IPoint, ISize } from './interfaces';
 import { round, parse } from './dab';
 
 /**
- * @description a 2 dimension integer point class
+ * a 2 dimension integer point class
  */
-export default class Point implements IPoint {
+export class Point implements IPoint {
   x: number;
   y: number;
 
   /**
-   * @description creates a Point 2D
+   * creates a Point 2D
    * @param x number, is rounded
    * @param y number, is rounded
    */
@@ -22,7 +22,7 @@ export default class Point implements IPoint {
   }
 
   /**
-   * @description calculates distance from this point to another
+   * calculates distance from this point to another
    * @param p point
    */
   public distance(p: IPoint): number {
@@ -33,12 +33,12 @@ export default class Point implements IPoint {
   }
 
   /**
-   * @description clones point
+   * clones point
    */
   public clone(): Point { return new Point(this.x, this.y) }
 
   /**
-   * @description returns a new point shifted by (x,y) vector
+   * returns a new point shifted by (x,y) vector
    * @param x vector x
    * @param y vector y
    */
@@ -48,20 +48,20 @@ export default class Point implements IPoint {
   }
 
   /**
-   * @description scales this point by a multiple (x,y)
+   * scales this point by a multiple (x,y)
    * @param x mul x
    * @param y mul y
    */
   public mul(x: number, y: number): Point { return new Point(this.x * x, this.y * y) }
 
   /**
-   * @description equality comparer
+   * equality comparer
    * @param p point
    */
   public equal(p: IPoint): boolean { return this.x == p.x && this.y == p.y }
 
   /**
-   * @description returns string of a Point oobject
+   * returns string of a Point oobject
    * @param options 0 = x,y	1 = parenthesis; 	2 = variables x: x, y: y
    */
   public toString(options?: number): string {
@@ -74,7 +74,7 @@ export default class Point implements IPoint {
   public get str(): string { return `${this.x}, ${this.y}` }
 
   /**
-   * @description returns quadrant of this point
+   * returns quadrant of this point
    * @returns 0 (0,0); -1 (x==0 or y ==0); 1 (y>0,x>0); 2 (y>0,x<0); 3 (y<0,x<0); 4 (y<0,x>0)
    */
   public get quadrant(): number {
@@ -88,7 +88,7 @@ export default class Point implements IPoint {
   }
 
   /**
-   * @description rotatea a point (x,y) through center (x,y) by an angle
+   * rotatea a point (x,y) through center (x,y) by an angle
    * @param {number} x x to rotate
    * @param {number} y y to rotate
    * @param {number} cx thru center x
@@ -115,7 +115,7 @@ export default class Point implements IPoint {
   }
 
   /**
-   * @description parse an string into an (x,y) Point
+   * parse an string into an (x,y) Point
    * @param value string in the for "x, y"
    */
   static parse(value: string): Point | undefined {

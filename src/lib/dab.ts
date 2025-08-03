@@ -79,7 +79,7 @@ export const dfnd = (t: any) => t !== void 0 && t !== null;
 export const isArr = (t: any) => Array.isArray(t); // typeOf(t) === c.a;
 
 /**
- * @description returns true if n is number
+ * returns true if n is number
  * @param n value
  *
  * - "1" returns false
@@ -88,7 +88,7 @@ export const isArr = (t: any) => Array.isArray(t); // typeOf(t) === c.a;
 export const isNum = (n: any) => typeof n === c.n;
 
 /**
- * @description returns true if n is numeric
+ * returns true if n is numeric
  * @param n
  *
  * - "1" returns true
@@ -101,7 +101,7 @@ export const isInt = (n: any) => (parseFloat(n) == parseInt(n)) && !isNaN(n);
 //http://speakingjs.com/es5/ch11.html#converting_to_integer
 
 /**
- * @description parse a number according to a radix
+ * parse a number according to a radix
  * @param s string value
  * @param radix convertion radix
  *
@@ -112,7 +112,7 @@ export const isInt = (n: any) => (parseFloat(n) == parseInt(n)) && !isNaN(n);
 export const pInt = (s: string, radix?: number) => parseInt(s, radix);
 
 /**
- * @description clamps a value inside a range min..max
+ * clamps a value inside a range min..max
  * @param v value
  * @param min minim
  * @param max maximum
@@ -120,7 +120,7 @@ export const pInt = (s: string, radix?: number) => parseInt(s, radix);
 export const clamp = (v: number, min: number, max: number) => (v <= min) ? min : (v >= max) ? max : v;
 
 /**
- * @description rounds a number to a decimal
+ * rounds a number to a decimal
  * @param v float value
  * @param decimals valid decimals
  *
@@ -207,7 +207,7 @@ export const defEnum = (e: any) => {
 }
 
 /**
- * @description defines a new object property
+ * defines a new object property
  * @param obj object
  * @param propName property name
  * @param attrs attributes
@@ -258,7 +258,7 @@ export const toBool = (val: any): boolean | undefined => (<any>a)[val];
 export const isBool = (val: any): boolean => (<any>a)[val] != undefined;
 
 /**
- * @description converts a value to boolean, and undefined are forced to boolean
+ * converts a value to boolean, and undefined are forced to boolean
  * @param val value
  * @param forcedUndefined forced undefined values, default is "false"
  */

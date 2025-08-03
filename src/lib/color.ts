@@ -3,7 +3,7 @@
 
 import { IColor } from "./interfaces";
 
-export default class Color implements IColor {
+export class Color implements IColor {
 
   /**
    * creates a new color

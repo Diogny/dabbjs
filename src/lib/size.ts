@@ -15,7 +15,7 @@ export default class Size implements ISize {
   public equal(size: Size): boolean { return this.width == size.width && this.height == size.height }
 
   /**
-   * @description returns true if both width & height are positive
+   * returns true if both width & height are positive
    */
   get positive(): boolean { return this.width >= 0 && this.height >= 0 }
 
@@ -26,7 +26,7 @@ export default class Size implements ISize {
   }
 
   /**
-   * @description parse an string into an (x,y) Size
+   * parse an string into an (x,y) Size
    * @param value string in the for "width, height"
    */
   static parse(value: string): Size | undefined {

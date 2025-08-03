@@ -1,13 +1,13 @@
 /**
- * @description AJAX with promise
+ * AJAX with promise
  */
-export default abstract class Ajaxp {
+export abstract class Ajaxp {
 
   static readonly sGet: string = "GET";
   static readonly sPost: string = "POST";
 
   /**
-   * @description template default object properties
+   * template default object properties
    */
   static readonly xobj: object = {
     method: Ajaxp.sGet,
@@ -17,12 +17,12 @@ export default abstract class Ajaxp {
   static readonly rt: string = "responseType";
 
   /**
-   * @description gets HTTP AJAX object
+   * gets HTTP AJAX object
    */
   public static x(): XMLHttpRequest { return window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); }
 
   /**
-   * @description returns a url query object
+   * returns a url query object
    * @param data object with properties
    * @param ask true to append, false only props. GET appends to url, POST in body
    * @returns query string
@@ -36,7 +36,7 @@ export default abstract class Ajaxp {
   }
 
   /**
-   * @description copies default object properties not in dest object
+   * copies default object properties not in dest object
    * @param io template object
    * @param obj dest object
    * @returns obj updated
@@ -49,7 +49,7 @@ export default abstract class Ajaxp {
   }
 
   /**
-   * @description performs the AJAX request
+   * performs the AJAX request
    * @param url url
    * @param ox object with values
    * @returns a promise
@@ -105,7 +105,7 @@ export default abstract class Ajaxp {
   }
 
   /**
-   * @description performs a AJAX GET
+   * performs a AJAX GET
    * @param url url
    * @param ox options below:
    *
@@ -118,7 +118,7 @@ export default abstract class Ajaxp {
   }
 
   /**
-   * @description performs a AJAX POST
+   * performs a AJAX POST
    * @param url url
    * @param ox options below:
    *

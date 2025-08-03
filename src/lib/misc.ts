@@ -1,6 +1,6 @@
 import { dfnd, isFn, pojo } from "./dab";
 import { IPoint } from "./interfaces";
-import Point from "./point";
+import { Point } from "./point";
 import Vector2D from "./vec2d";
 
 //https://plainjs.com/javascript/traversing/match-element-selector-52/
@@ -9,7 +9,7 @@ import Vector2D from "./vec2d";
 export const range = (s: number, e: number) => Array.from('x'.repeat(e - s), (_, i) => s + i);
 
 /**
- * @description loops through an object properties and returns it in a function
+ * loops through an object properties and returns it in a function
  * @param obj an object
  * @param fn a function as (value: any, key: string, ndx: number) => void
  */
@@ -23,7 +23,7 @@ export const each = <T>(obj: { [id: string]: any }, fn: (value: T, key: string, 
 };
 
 /**
- * @description returns an array of all object properties mapped
+ * returns an array of all object properties mapped
  * @param obj an object
  * @param fn a function as (value: any, key: string, ndx: number) => any
  */
@@ -36,7 +36,7 @@ export const map = <T>(obj: { [id: string]: any }, fn: (value: T, key: string, n
 };
 
 /**
- * @description filters an object properties by a function
+ * filters an object properties by a function
  * @param obj an object
  * @param fn a function as (value: any, key: string, ndx: number) => any
  */
@@ -49,7 +49,7 @@ export const filter = <T>(obj: { [id: string]: any }, fn: (value: T, key: string
 };
 
 /**
- * @description
+ *
  * @param obj an object to filter
  * @param fn if it returns true array[]= value (key is lost), if object array[] = object, otherwise discarded
  */
@@ -67,7 +67,7 @@ export const filterArray = <T>(obj: { [id: string]: any }, fn: (value: T, key: s
 };
 
 /**
- * @description get/set object property
+ * get/set object property
  * @param o object
  * @param path path to property "a.b.c"
  * @param value undefined to get value, otherwise
@@ -111,7 +111,7 @@ export const copy = (obj: { [id: string]: any }, src: { [id: string]: any }) => 
 }
 
 /**
- * @description creates a NxN matrix
+ * creates a NxN matrix
  * @param rows amount of rows
  * @param cols amount of columns
  * @param filler cell filler
@@ -120,7 +120,7 @@ export const matrix = <T>(rows: number, cols: number, filler: T): T[][] =>
   Array.from({ length: rows }, () => new Array(cols).fill(filler));
 
 /**
-* @description returns the points of an arrow and vector
+* returns the points of an arrow and vector
 * @param a first point
 * @param b second point
 * @param head arrow head length

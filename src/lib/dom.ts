@@ -1,7 +1,7 @@
 import { empty, isFn, isStr, consts } from "./dab"
 
 /**
- * @description returns true if an element if an HTML or SVG DOM element
+ * returns true if an element if an HTML or SVG DOM element
  * @param e {any} an element
  */
 export const isDOM = (e: any) => e instanceof HTMLElement;  // || e instanceof Document;
@@ -23,7 +23,7 @@ export const css = (el: HTMLElement, styles: { [id: string]: any } | string) => 
 }
 
 /**
- * @description get/set html element attribute
+ * get/set html element attribute
  * @param el HTML element
  * @param attrs string to get it's attribute, or an object with attributes to set
  * @param value when defined
@@ -53,7 +53,7 @@ export const attr = function (el: HTMLElement, attrs: { [id: string]: any } | st
 }
 
 /**
- * @description adds an event listener to an element
+ * adds an event listener to an element
  * @param el element
  * @param type event name
  * @param fn listener function
@@ -62,7 +62,7 @@ export const attr = function (el: HTMLElement, attrs: { [id: string]: any } | st
 export const aEL = (el: HTMLElement, type: string, fn: Function, b?: boolean | AddEventListenerOptions): void => el.addEventListener(type, <any>fn, b);
 
 /**
- * @description removes an event listener from an element
+ * removes an event listener from an element
  * @param el element
  * @param type event name
  * @param fn
@@ -71,7 +71,7 @@ export const aEL = (el: HTMLElement, type: string, fn: Function, b?: boolean | A
 export const rEL = (el: HTMLElement, type: string, fn: Function, b?: boolean | AddEventListenerOptions): void => el.removeEventListener(type, <any>fn, b);
 
 /**
- * @description adds an event listener to the document
+ * adds an event listener to the document
  * @param type event name
  * @param fn listener function
  * @param b boolean | AddEventListenerOptions | undefined
@@ -79,7 +79,7 @@ export const rEL = (el: HTMLElement, type: string, fn: Function, b?: boolean | A
 export const daEl = (type: string, fn: Function, b?: boolean | AddEventListenerOptions): void => document.addEventListener(type, <any>fn, b);
 
 /**
- * @description removes an event listener from the document
+ * removes an event listener from the document
  * @param el element
  * @param type event name
  * @param fn
@@ -88,14 +88,14 @@ export const daEl = (type: string, fn: Function, b?: boolean | AddEventListenerO
 export const drEL = (type: string, fn: Function, b?: boolean | AddEventListenerOptions): void => document.removeEventListener(type, <any>fn, b);
 
 /**
- * @description appends a child element to it's new parent
+ * appends a child element to it's new parent
  * @param parent parent element
  * @param child child element
  */
 export const aChld = (parent: any, child: any) => parent.appendChild(child);
 
 /**
- * @description test for class
+ * test for class
  * @param el Element
  * @param className className cannot contain spaces
  * @returns true if present, false otherwise
@@ -103,21 +103,21 @@ export const aChld = (parent: any, child: any) => parent.appendChild(child);
 export const hCl = (el: Element, className: string): boolean => el.classList.contains(className);
 
 /**
- * @description adds a class to an Element
+ * adds a class to an Element
  * @param el Element
  * @param className className cannot contain spaces
  */
 export const aCl = (el: Element, className: string) => el.classList.add(className);
 
 /**
- * @description removes a class from an Element
+ * removes a class from an Element
  * @param el Element
  * @param className className cannot contain spaces
  */
 export const rCl = (el: Element, className: string) => el.classList.remove(className);
 
 /**
- * @description toggles a class from an Element
+ * toggles a class from an Element
  * @param el Element
  * @param className className cannot contain spaces
  * @param force undefined is toggle, true is add, false is remove
@@ -136,7 +136,7 @@ export const aClx = (el: Element, className: string): Element => {
 }
 
 /**
- * @description calls a function when DOM is ready
+ * calls a function when DOM is ready
  * @param fn function to be called
  */
 export const ready = (fn: Function) => { //https://plainjs.com/javascript/events/running-code-when-the-document-is-ready-15/
@@ -156,27 +156,27 @@ export const ready = (fn: Function) => { //https://plainjs.com/javascript/events
 };
 
 /**
- * @description document.querySelector shortcut
+ * document.querySelector shortcut
  * @param selectors query string
  * @param elem HTMLElement or document if undefined
  */
 export const qS = (selectors: string, elem?: HTMLElement): HTMLElement => <HTMLElement>(elem || document).querySelector(selectors);
 
 /**
- * @description document.querySelectorAll shortcut
+ * document.querySelectorAll shortcut
  * @param selectors query string
  * @param elem HTMLElement or document if undefined
  */
 export const qSA = (selectors: string, elem?: HTMLElement) => Array.from<HTMLElement>((elem || document).querySelectorAll(selectors));
 
 /**
- * @description document.getElementById shortcut
+ * document.getElementById shortcut
  * @param s #id
  */
 export const gEId = (id: string) => document.getElementById(id);
 
 /**
- * @description extracts a base-name from page metadata
+ * extracts a base-name from page metadata
  */
 export const basePath = () => {
   let
@@ -185,7 +185,7 @@ export const basePath = () => {
 }
 
 /**
- * @description creates an SVG element by tag name
+ * creates an SVG element by tag name
  * @param tagName tag name
  * @param id optional name
  * @param nsAttrs attributes
@@ -194,7 +194,7 @@ export const tag = (tagName: string, id: string, nsAttrs: { [id: string]: any })
   attr(document.createElementNS(consts.svgNs, tagName), nsAttrs));
 
 /**
-* @description creates an SVG element by an string
+* creates an SVG element by an string
 * @param html html string representation
 */
 export const svg = (html: string): SVGElement => {
@@ -204,7 +204,7 @@ export const svg = (html: string): SVGElement => {
 };
 
 /**
-* @description creates an HTML element by an string
+* creates an HTML element by an string
 * @param html html string representation
 */
 export const html = (html: string): HTMLElement => {
@@ -293,7 +293,7 @@ export const svgStyles = (dom: HTMLElement): HTMLElement => {
 }
 
 /**
- * @description retrieves all DOM script templates
+ * retrieves all DOM script templates
  *
  * script with attribute data-tmpl="id" are returned as an object with [id] as key.
  *

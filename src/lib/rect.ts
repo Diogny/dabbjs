@@ -6,12 +6,12 @@ export default class Rect implements IRect {
   constructor(public x: number, public y: number, public width: number, public height: number) { }
 
   /**
-   * @description returns true is this rectangle has negative widht or height
+   * returns true is this rectangle has negative width or height
    */
   get empty(): boolean { return this.width < 0 || this.height < 0 }
 
   /**
-   * @description returns true a point is inside this rectangle
+   * returns true a point is inside this rectangle
    * @param p point (x,y)
    */
   public inside(p: IPoint): boolean {
@@ -20,7 +20,7 @@ export default class Rect implements IRect {
   }
 
   /**
-   * @description returns true if this rectangle container intercepts with r
+   * returns true if this rectangle container intercepts with r
    * @param r interception rectangle
    * @returns true if this intercepts with r, r is modified with right values, otherwise false, and r is wrong
    */
@@ -36,12 +36,12 @@ export default class Rect implements IRect {
   }
 
   /**
-   * @description clone this rect
+   * clone this rect
    */
   public clone(): Rect { return Rect.create(this) }
 
   /**
-   * @description returns true if this rect contains r
+   * returns true if this rect contains r
    * @param r test rect
    */
   public contains(r: Rect): boolean {
@@ -52,7 +52,7 @@ export default class Rect implements IRect {
   }
 
   /**
-   * @description returns a combined rectangle between this rect and r. this is not modified
+   * returns a combined rectangle between this rect and r. this is not modified
    * @param r rect to combine
    */
   public add(r: Rect): Rect {
@@ -68,7 +68,7 @@ export default class Rect implements IRect {
   }
 
   /**
-   * @description moves this rectangle
+   * moves this rectangle
    * @param x delta x
    * @param y delta y
    */
@@ -78,7 +78,7 @@ export default class Rect implements IRect {
   }
 
   /**
-   * @description returns a new rectangle grow/shrink by a factor, this is not modified.
+   * returns a new rectangle grow/shrink by a factor, this is not modified.
    * @param dx left & right growth
    * @param dy top & bottom growth
    */
@@ -87,7 +87,7 @@ export default class Rect implements IRect {
   }
 
   /**
-   * @description returns a new rectangle translated
+   * returns a new rectangle translated
    * @param tx x translation
    * @param ty y translation
    */
@@ -96,7 +96,7 @@ export default class Rect implements IRect {
   }
 
   /**
-   * @description returns this rectangle scaled by a factor, this is not modified
+   * returns this rectangle scaled by a factor, this is not modified
    * @param sx x, width scale factor
    * @param sy y, height scale factor
    */
@@ -105,7 +105,7 @@ export default class Rect implements IRect {
   }
 
   /**
-   * @description returns true if this rectangle is equal to r, false otherwise
+   * returns true if this rectangle is equal to r, false otherwise
    * @param r rectangle to compare
    */
   public equal(r: Rect): boolean { return this.x == r.x && this.y == r.y && this.width == r.width && this.height == r.height }
@@ -123,12 +123,12 @@ export default class Rect implements IRect {
   }
 
   /**
-   * @description returns an empty rectangle
+   * returns an empty rectangle
    */
   static get empty(): Rect { return new Rect(0, 0, 0, 0) }
 
   /**
-   * @description parse a rectangle in string form
+   * parse a rectangle in string form
    * @param value string in the for "x, y, widht, height"
    */
   static parse(value: string): Rect | undefined {
@@ -138,7 +138,7 @@ export default class Rect implements IRect {
   }
 
   /**
-   * @description returns string (x, y, widht, height) of this rectangle
+   * returns string (x, y, widht, height) of this rectangle
    */
   public get str(): string { return `${this.x}, ${this.y}, ${this.width}, ${this.height}` }
 }
