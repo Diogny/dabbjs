@@ -1,7 +1,7 @@
 import { ISize } from './interfaces';
 import { round, parse } from './dab';
 
-export default class Size implements ISize {
+export class Size implements ISize {
   public width: number;
   public height: number;
 

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
-    //
+    //this allows tree-shaking in webpack
     "module": "es6", // "commonjs",
     "moduleResolution": "node",
     "declaration": true,

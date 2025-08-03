@@ -1,7 +1,7 @@
 import { IPoint, IRect } from "./interfaces";
 import { parse } from "./dab";
 
-export default class Rect implements IRect {
+export class Rect implements IRect {
 
   constructor(public x: number, public y: number, public width: number, public height: number) { }
 
